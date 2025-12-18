@@ -1,9 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=Krub:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Anuphan", sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -15,6 +18,16 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+html, body, #root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.engFonts {
+  font-family: "TikTok Sans", sans-serif;
 }
 
 a {
@@ -70,3 +83,42 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
+.btn-fancy {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  transition: transform 250ms ease, box-shadow 250ms ease, background 250ms ease;
+  
+}
+
+/* ✅ พื้นหลังตอนชี้ */
+.btn-fancy:hover {
+  background: linear-gradient(270deg, rgb(77, 182, 172) 0%, rgb(0, 109, 119) 100%);
+  color: white;
+}
+
+/* ✅ แสงเฉียงวิ่ง */
+.btn-fancy::before {
+  content: "";
+  position: absolute;
+  inset: -35%;
+  transform: translateX(-140%) skewX(-20deg);
+  transition: transform 2500ms cubic-bezier(.16, 1, .3, 1); /* ช้าลง + นุ่มขึ้น */
+
+
+  background: linear-gradient(
+    125deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.10) 38%,
+    rgba(255, 255, 255, 0.55) 50%,
+    rgba(255, 255, 255, 0.10) 62%,
+    transparent 100%
+  );
+}
+
+.btn-fancy:hover::before {
+  transform: translateX(140%) skewX(-20deg);
+}
+
