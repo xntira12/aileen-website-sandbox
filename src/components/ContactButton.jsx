@@ -1,9 +1,9 @@
-export default function ContactButton({ href = "#contact", className = "" }) {
+export default function ContactButton({ href = "/contact", className = "" }) {
   return (
     <a
       href={href}
       style={{
-        background: "linear-gradient(270deg, #4db6ac 0%, #00838f 100%)",
+        background: "linear-gradient(270deg, #4db6ac 0%, #00838f 100% )",
       }}
       className={[
         "btn-fancy inline-flex items-center gap-2 rounded-full px-5 py-2.5",

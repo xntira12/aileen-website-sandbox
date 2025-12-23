@@ -111,7 +111,7 @@ export default function CustomersMarquee() {
         <div className="flex justify-center pb-8">
         <span className=" inline-flex items-center gap-2 rounded-full text-slate-600 border border-slate-200 bg-white/5 px-4 py-2 text-xs tracking-widest  backdrop-blur">
             <span className="h-2 w-2 rounded-full bg-cyan-600" />
-            CUSTOMERS
+            OUR CUSTOMERS
           </span>
           </div>
         <h2 className="text-center text-3xl font-bold text-slate-600">

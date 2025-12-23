@@ -2,6 +2,8 @@ import Navbar from "../components/Navbar";
 import homeImg from "../assets/img/home/main-bg.gif";
 import logo from "../assets/img/logo/aileen-logo.png";
 import sloganImg from "../assets/img/home/slogan.png";
+import SectionDataOrbit from "../components/SectionDataOrbit";
+import SectionStrengths from "../components/SectionStrengths";
 
 import CustomersMarquee from "../components/CustomersMarquee";
 
@@ -74,7 +76,7 @@ export default function Home() {
              hover:-translate-y-0.5 hover:shadow-lg hover:shadow-emerald-500/15"
               >
                 <span className="relative z-10">Contact Us</span>
-                 <svg
+                <svg
                   class="w-3.5 text-gray-800 dark:text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
@@ -101,11 +103,12 @@ export default function Home() {
       <section id="customers" className="py-0 bg-white">
         <CustomersMarquee />
       </section>
-      <section id="services" className="py-12">
-        Services
+      <section id="customers" className="py-0 bg-slate-50">
+        <SectionDataOrbit />
       </section>
-      <section id="customers" className="py-12">
-        Customers
+
+      <section id="strengths" className="py-0">
+        <SectionStrengths />
       </section>
       <section id="strengths" className="py-12">
         Strengths

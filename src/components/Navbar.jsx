@@ -13,8 +13,8 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const menuText = scrolled ? "text-slate-900" : "text-white";
-  const menuHover = scrolled ? "hover:text-teal-700" : "hover:text-teal-300";
+  const menuText = scrolled ? "text-slate-700" : "text-slate-200";
+  const menuHover = scrolled ? "hover:text-teal-700" : "hover:text-teal-400";
 
   const textColor = scrolled ? "text-slate-900" : "text-white";
   const navBg = scrolled
@@ -38,7 +38,7 @@ export default function Navbar() {
           </a>
 
           {/* Desktop menu */}
-          <ul className="hidden items-center gap-8 md:flex text-sm font-light tracking-wide transition-colors">
+          <ul className="hidden items-center gap-8 md:flex text-sm  tracking-wide transition-colors">
   <li>
     <a className={` ${menuText} ${menuHover}`} href="#home">
       หน้าแรก
