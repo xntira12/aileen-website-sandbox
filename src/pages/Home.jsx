@@ -1,5 +1,5 @@
 import Navbar from "../components/Navbar";
-import homeImg from "../assets/img/home/Main BG_1.gif";
+import homeImg from "../assets/img/home/main-bg.gif";
 import logo from "../assets/img/logo/aileen-logo.png";
 import sloganImg from "../assets/img/home/slogan.png";
 
