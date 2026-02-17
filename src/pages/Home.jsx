@@ -127,7 +127,7 @@ export default function Home() {
         <SectionServiceAndSolutions />
       </section>
 
-      <section id="contact" className="py-12">
+      <section id="contact" className="">
         <SectionContactFooter />
       </section>
     </div>
