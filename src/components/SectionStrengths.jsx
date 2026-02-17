@@ -3,17 +3,17 @@ import cubeImg from "../assets/img/home/cube.png";
 import stBg from "../assets/img/home/st-bg.png";
 
 /* ══════════════════════════════════════════════
-   Injected CSS (enhanced animations only)
+   Injected CSS (mobile layout + tabs + cards + fix cube overlap)
    ══════════════════════════════════════════════ */
-const STYLE_ID = "st-v4-css";
+const STYLE_ID = "st-v5-css";
 function injectCSS() {
   if (document.getElementById(STYLE_ID)) return;
   const s = document.createElement("style");
   s.id = STYLE_ID;
   s.textContent = `
     /* cube float + glow */
-    @keyframes stFloat{0%,100%{transform:translate(-50%,-50%) translateY(-6px)}50%{transform:translate(-50%,-50%) translateY(-18px)}}
-    @keyframes stGlow{0%,100%{filter:drop-shadow(0 0 20px rgba(56,224,208,.3)) drop-shadow(0 0 50px rgba(56,224,208,.12))}50%{filter:drop-shadow(0 0 35px rgba(56,224,208,.5)) drop-shadow(0 0 70px rgba(56,224,208,.25))}}
+    @keyframes stFloat{0%,100%{transform:translateY(-6px)}50%{transform:translateY(-18px)}}
+    @keyframes stGlow{0%,100%{filter:drop-shadow(0 0 20px rgba(56,224,208,.25)) drop-shadow(0 0 50px rgba(56,224,208,.10))}50%{filter:drop-shadow(0 0 35px rgba(56,224,208,.45)) drop-shadow(0 0 70px rgba(56,224,208,.22))}}
     .st-cube-anim{animation:stFloat 4.5s ease-in-out infinite, stGlow 3.5s ease-in-out infinite}
 
     /* particles */
@@ -44,7 +44,7 @@ function injectCSS() {
     @keyframes stBdg{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
     .st-bdg{animation:stBdg .4s ease forwards}
 
-    /* enhanced card */
+    /* enhanced card (desktop) */
     .st-ec{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.04);backdrop-filter:blur(10px);padding:20px 24px;display:flex;align-items:flex-start;gap:16px;transition:transform .3s,box-shadow .3s,border-color .3s}
     .st-ec::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(56,224,208,.05),transparent);transition:left .55s}
     .st-ec:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(0,0,0,.25),0 0 16px rgba(56,224,208,.06);border-color:rgba(56,224,208,.2)}
@@ -52,16 +52,71 @@ function injectCSS() {
     .st-ec:hover .st-ico{transform:rotateY(180deg)}
     .st-ico{flex-shrink:0;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);transition:transform .5s;transform-style:preserve-3d}
 
-    /* internal pill for trust/provide views */
+    /* internal pill (desktop only nav) */
     .st-ip{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:9999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);backdrop-filter:blur(6px);color:rgba(255,255,255,.7);font-size:.82rem;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .3s}
     .st-ip:hover{background:rgba(255,255,255,.1);border-color:rgba(56,224,208,.25);color:rgba(255,255,255,.9)}
     .st-ip .a{font-size:1rem;line-height:1;transition:transform .3s}
     .st-ip:hover .af{transform:translateX(2px)}.st-ip:hover .ab{transform:translateX(-2px)}
 
-    /* mobile accordion */
-    @keyframes stAcc{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
-    .st-acc{display:none}
-    .st-acc.open{display:block;animation:stAcc .18s ease-out both}
+    /* ───────────────
+       Mobile UI (tabs + cards + micro-animations)
+       ─────────────── */
+    .st-mTabs{
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+      box-shadow:0 10px 30px rgba(0,0,0,.18);
+    }
+    .st-mTab{
+      border-radius:9999px;
+      padding:10px 16px;
+      font-size:.78rem;
+      font-weight:700;
+      letter-spacing:.06em;
+      transition:all .25s ease;
+      color:rgba(255,255,255,.72);
+    }
+    .st-mTab:hover{color:rgba(255,255,255,.9)}
+    .st-mTab.is-active{
+      color:white;
+      background:linear-gradient(135deg, rgba(56,224,208,.18), rgba(14,165,233,.14));
+      border:1px solid rgba(56,224,208,.22);
+      box-shadow:0 8px 22px rgba(56,224,208,.08);
+    }
+    .st-mCue{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+    }
+
+    @keyframes stMuUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+    .st-mu{opacity:0}
+    .st-mu.on{animation:stMuUp .6s cubic-bezier(.22,1,.36,1) forwards}
+
+    .st-mCard{
+      position:relative;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+      overflow:hidden;
+    }
+    .st-mCard::before{
+      content:'';
+      position:absolute; inset:0;
+      background:linear-gradient(135deg, rgba(56,224,208,.10), rgba(14,165,233,.06), transparent 60%);
+      pointer-events:none;
+      opacity:.9;
+    }
+
+    @media (max-width: 768px){
+      /* ลดโอกาสทับกันด้วยการย้ำชั้นของแท็บ */
+      .st-mobileTabsWrap{position:relative; z-index:20}
+      .st-mobileCubeWrap{position:relative; z-index:10}
+    }
   `;
   document.head.appendChild(s);
 }
@@ -206,53 +261,28 @@ function EC({ item, dir = "left", dl = 0, on = false }) {
   );
 }
 
-/* ─── Mobile accordion (เปิดทีละอัน) ─── */
-function MobileKeysAccordion({ items, inV = false }) {
-  const [openIdx, setOpenIdx] = useState(null);
-
+/* ─── Mobile list (show details always + with icon) ─── */
+function MobileKeysList({ items, inV = false }) {
   return (
-    <div className="md:hidden">
-      <div className="space-y-2">
-        {items.map((it, idx) => {
-          const open = openIdx === idx;
-
-          return (
-            <div key={it.id}>
-              <button
-                type="button"
-                onClick={() => setOpenIdx((cur) => (cur === idx ? null : idx))}
-                className={[
-                  "w-full text-left flex items-start gap-3 rounded-full px-4 py-3 ring-1",
-                  "bg-white/5 ring-white/15 text-white/85 backdrop-blur",
-                ].join(" ")}
-                style={{
-                  opacity: inV ? 1 : 0,
-                  transform: inV ? "translateY(0)" : "translateY(14px)",
-                  transition: `opacity .55s ease ${200 + idx * 70}ms, transform .55s ease ${
-                    200 + idx * 70
-                  }ms`,
-                }}
-                aria-expanded={open}
-              >
-                <span className="mt-[6px] h-2 w-2 shrink-0 rounded-full bg-emerald-300/90" />
-                <span className="flex-1 text-sm font-semibold leading-snug">{it.title}</span>
-                <span className="ml-2 text-xs opacity-70">{open ? "−" : "+"}</span>
-              </button>
-
-              <div
-                className={[
-                  "st-acc mt-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm leading-relaxed text-white/70 backdrop-blur",
-                  open ? "open" : "",
-                ].join(" ")}
-              >
-                {it.tooltip}
-              </div>
+    <div className="md:hidden space-y-3">
+      {items.map((it, idx) => (
+        <div
+          key={it.id}
+          className={`st-mCard p-4 st-mu ${inV ? "on" : ""}`}
+          style={{ animationDelay: `${180 + idx * 90}ms` }}
+        >
+          <div className="relative z-[1] flex items-start gap-3">
+            <div className="mt-[2px] grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/15 bg-white/10 text-[18px] shadow-sm">
+              <span aria-hidden="true">{it.icon ?? "💡"}</span>
             </div>
-          );
-        })}
-      </div>
 
-    
+            <div className="min-w-0">
+              <div className="text-[.95rem] font-semibold text-white/90">{it.title}</div>
+              <div className="mt-1 text-sm leading-relaxed text-white/70">{it.tooltip}</div>
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
@@ -261,7 +291,7 @@ function MobileKeysAccordion({ items, inV = false }) {
    MAIN
    ══════════════════════════════════════════════ */
 export default function SectionStrengths() {
-  const [view, setView] = useState("center"); // desktop ใช้เหมือนเดิม
+  const [view, setView] = useState("center"); // desktop เหมือนเดิม
   const [inV, setInV] = useState(false);
   const [vk, setVk] = useState(0);
   const secRef = useRef(null);
@@ -316,15 +346,49 @@ export default function SectionStrengths() {
     setVk((k) => k + 1);
   }, []);
 
-  // 6 Keys
+  // 6 Keys + icons (mobile cards show icon)
   const keys = useMemo(
     () => [
-      { id: "simplicity", title: "Simplicity", tooltip: "เราเชื่อในระบบที่ใช้งานง่าย ช่วยให้ผู้ใช้เข้าใจ กระบวนการ และทำงานได้ด้วยตนเอง อย่างมีประสิทธิภาพ" },
-      { id: "rapidly", title: "Rapidly", tooltip: "ให้ความสำคัญและตอบรับกับการเปลี่ยนแปลง ทางธุรกิจที่เป็นไปอย่างรวดเร็วในปัจจุบัน" },
-      { id: "experience", title: "Experience", tooltip: "เรานำเสนอโซลูชั่น ที่มีคุณภาพ เหมาะสมกับความต้องการ ตอบโจทย์ผู้ใช้งานได้อย่างตรงจุด และคุ้มค่า กับการลงทุน" },
-      { id: "platform", title: "Platform", tooltip: "แพลตฟอร์มที่เชื่อถือได้และยืดหยุ่น รองรับโซลูชั่นหลากหลาย เพิ่มคุณภาพการทำงานและขยายศักยภาพทางธุรกิจ" },
-      { id: "services", title: "Services", tooltip: "บริการครบวงจร ครอบคลุมการบูรณาการเทคโนโลยี เพื่อยกระดับการทำงานในองค์กร และตอบโจทย์ ทางธุรกิจ" },
-      { id: "consulting", title: "Consulting", tooltip: "ที่ปรึกษามืออาชีพ ให้คำแนะนำ รวมทั้งช่วยวางแผน และขับเคลื่อน กลยุทธ์ด้วยความมั่นใจ" },
+      {
+        id: "simplicity",
+        title: "Simplicity",
+        icon: "✨",
+        tooltip:
+          "เราเชื่อในระบบที่ใช้งานง่าย ช่วยให้ผู้ใช้เข้าใจ กระบวนการ และทำงานได้ด้วยตนเอง อย่างมีประสิทธิภาพ",
+      },
+      {
+        id: "rapidly",
+        title: "Rapidly",
+        icon: "⚡",
+        tooltip: "ให้ความสำคัญและตอบรับกับการเปลี่ยนแปลง ทางธุรกิจที่เป็นไปอย่างรวดเร็วในปัจจุบัน",
+      },
+      {
+        id: "experience",
+        title: "Experience",
+        icon: "🏆",
+        tooltip:
+          "เรานำเสนอโซลูชั่น ที่มีคุณภาพ เหมาะสมกับความต้องการ ตอบโจทย์ผู้ใช้งานได้อย่างตรงจุด และคุ้มค่า กับการลงทุน",
+      },
+      {
+        id: "platform",
+        title: "Platform",
+        icon: "🧩",
+        tooltip:
+          "แพลตฟอร์มที่เชื่อถือได้และยืดหยุ่น รองรับโซลูชั่นหลากหลาย เพิ่มคุณภาพการทำงานและขยายศักยภาพทางธุรกิจ",
+      },
+      {
+        id: "services",
+        title: "Services",
+        icon: "🛠️",
+        tooltip:
+          "บริการครบวงจร ครอบคลุมการบูรณาการเทคโนโลยี เพื่อยกระดับการทำงานในองค์กร และตอบโจทย์ ทางธุรกิจ",
+      },
+      {
+        id: "consulting",
+        title: "Consulting",
+        icon: "🧭",
+        tooltip: "ที่ปรึกษามืออาชีพ ให้คำแนะนำ รวมทั้งช่วยวางแผน และขับเคลื่อน กลยุทธ์ด้วยความมั่นใจ",
+      },
     ],
     []
   );
@@ -332,15 +396,28 @@ export default function SectionStrengths() {
   const trustC = useMemo(() => [keys[0], keys[1], keys[2]], [keys]);
   const provC = useMemo(() => [keys[3], keys[4], keys[5]], [keys]);
 
-  // ✅ Mobile: ไม่มี Overview -> ถ้า view เป็น center ให้ถือว่าเป็น trust
+  // ✅ Mobile: ไม่มี Overview
   const mobileView = view === "center" ? "trust" : view;
 
   return (
-    <section ref={secRef} className="relative isolate overflow-hidden py-20 strength-dark" onMouseMove={onM}>
+    <section
+      ref={secRef}
+      className="relative isolate overflow-hidden py-20 strength-dark"
+      onMouseMove={onM}
+    >
       {/* BG */}
-      <img src={stBg} alt="" aria-hidden="true" className="pointer-events-none absolute inset-0 -z-30 h-full w-full object-cover opacity-60" />
+      <img
+        src={stBg}
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-30 h-full w-full object-cover opacity-60"
+      />
       <div ref={bgRef} className="strength-dark__bg pointer-events-none absolute inset-0 -z-20" />
-      {inV && <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"><Particles /></div>}
+      {inV && (
+        <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+          <Particles />
+        </div>
+      )}
 
       <div className="relative z-10 mx-auto max-w-6xl px-6 mt-20 mb-20">
         {/* Header */}
@@ -370,26 +447,20 @@ export default function SectionStrengths() {
           </p>
         </div>
 
-        {/* ✅ Mobile switcher: เหลือแค่ 2 อัน */}
-        <div className="md:hidden mt-8 flex justify-center">
-          <div className="inline-flex rounded-full border border-white/15 bg-white/5 p-1 backdrop-blur">
+        {/* ✅ Mobile switcher: 2 tabs only (no black) */}
+        <div className="md:hidden mt-8 flex justify-center st-mobileTabsWrap">
+          <div className="st-mTabs inline-flex rounded-full p-1">
             <button
               type="button"
               onClick={() => go("trust")}
-              className={[
-                "px-4 py-2 text-xs font-semibold rounded-full transition",
-                mobileView === "trust" ? "bg-white/10 text-white" : "text-white/70 hover:text-white",
-              ].join(" ")}
+              className={`st-mTab ${mobileView === "trust" ? "is-active" : ""}`}
             >
               Trust By
             </button>
             <button
               type="button"
               onClick={() => go("provide")}
-              className={[
-                "px-4 py-2 text-xs font-semibold rounded-full transition",
-                mobileView === "provide" ? "bg-white/10 text-white" : "text-white/70 hover:text-white",
-              ].join(" ")}
+              className={`st-mTab ${mobileView === "provide" ? "is-active" : ""}`}
             >
               Provide To
             </button>
@@ -398,42 +469,42 @@ export default function SectionStrengths() {
 
         {/* ═══ STAGES ═══ */}
         <div className="mt-10 md:mt-14 relative">
-          {/* ─── MOBILE CONTENT (ไม่มี Overview) ─── */}
+          {/* ─── MOBILE CONTENT ─── */}
           <div className="md:hidden">
-            <div className="flex items-center justify-center gap-3 mb-4 mt-6">
+           
+
+            {/* section cue */}
+            <div className="flex justify-center mb-5">
+              {mobileView === "trust" ? (
+                <span className="st-mCue inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs text-white/80">
+                  <span className="h-2 w-2 rounded-full bg-emerald-300" />
+                  Trust By — สิ่งที่เรายึดมั่น
+                </span>
+              ) : (
+                <span className="st-mCue inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs text-white/80">
+                  <span className="h-2 w-2 rounded-full bg-sky-300" />
+                  Provide To — สิ่งที่เราส่งมอบ
+                </span>
+              )}
+            </div>
+
+            {/* list with icon + details always visible */}
+            {mobileView === "trust" ? (
+              <MobileKeysList key="m-trust" items={trustC} inV={inV} />
+            ) : (
+              <MobileKeysList key="m-provide" items={provC} inV={inV} />
+            )}
+
+             {/* cube: อยู่ใต้แท็บ ไม่ทับ (ลดขนาด/เพิ่ม margin) */}
+            <div className="st-mobileCubeWrap flex items-center justify-center mt-[50%]  mr-[-45%]">
               <img
                 src={cubeImg}
                 alt="Cube"
-                className="w-[110px] select-none"
+                className={`w-[156px] select-none ${inV ? "st-cube-anim" : ""}`}
                 draggable={false}
                 style={{ filter: "drop-shadow(0 0 18px rgba(56,224,208,.22))" }}
               />
             </div>
-
-            {mobileView === "trust" ? (
-              <>
-                <div className="flex justify-center mb-4">
-                  <span className="st-bdg inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/5 px-5 py-2 text-sm font-medium text-emerald-300 backdrop-blur-sm">
-                    <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                    Trust By — สิ่งที่เรายึดมั่น
-                  </span>
-                </div>
-
-                {/* ✅ key = mobileView เพื่อ reset การเปิด/ปิดทุกครั้งที่สลับแท็บ */}
-                <MobileKeysAccordion key="trust" items={trustC} inV={inV} />
-              </>
-            ) : (
-              <>
-                <div className="flex justify-center mb-4">
-                  <span className="st-bdg inline-flex items-center gap-2 rounded-full border border-sky-400/20 bg-sky-400/5 px-5 py-2 text-sm font-medium text-sky-300 backdrop-blur-sm">
-                    <span className="h-2 w-2 rounded-full bg-sky-400 animate-pulse" />
-                    Provide To — สิ่งที่เราส่งมอบ
-                  </span>
-                </div>
-
-                <MobileKeysAccordion key="provide" items={provC} inV={inV} />
-              </>
-            )}
           </div>
 
           {/* ─── DESKTOP: ORIGINAL (เหมือนเดิมทั้งหมด) ─── */}
@@ -441,7 +512,10 @@ export default function SectionStrengths() {
             <div className="relative mx-auto h-[520px] max-w-5xl">
               <Lines on={inV} />
 
-              <div className={`strength-cube mt-5 ${inV ? "st-cube-anim" : ""}`} style={{ opacity: inV ? 1 : 0, transition: "opacity 0.7s ease 0.1s" }}>
+              <div
+                className={`strength-cube mt-5 ${inV ? "st-cube-anim" : ""}`}
+                style={{ opacity: inV ? 1 : 0, transition: "opacity 0.7s ease 0.1s" }}
+              >
                 <img src={cubeImg} alt="Cube" className="w-[250px] select-none" draggable={false} />
               </div>
 
@@ -496,7 +570,13 @@ export default function SectionStrengths() {
                 ))}
               </div>
               <div className={`relative flex flex-col items-center gap-5 ${view === "trust" ? "st-cbr" : ""}`}>
-                <img src={cubeImg} alt="Cube" className="w-[320px] select-none" draggable={false} style={{ filter: "drop-shadow(0 0 24px rgba(56,224,208,.25))" }} />
+                <img
+                  src={cubeImg}
+                  alt="Cube"
+                  className="w-[320px] select-none"
+                  draggable={false}
+                  style={{ filter: "drop-shadow(0 0 24px rgba(56,224,208,.25))" }}
+                />
                 <div className="flex items-center gap-3">
                   <button className="st-ip" onClick={() => go("center")} type="button">
                     <span className="a ab">‹</span> Overview
@@ -520,7 +600,13 @@ export default function SectionStrengths() {
             )}
             <div className="relative mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-2" key={`p${vk}`}>
               <div className={`relative flex flex-col items-center gap-5 ${view === "provide" ? "st-cbl" : ""}`}>
-                <img src={cubeImg} alt="Cube" className="w-[320px] select-none" draggable={false} style={{ filter: "drop-shadow(0 0 24px rgba(56,224,208,.25))" }} />
+                <img
+                  src={cubeImg}
+                  alt="Cube"
+                  className="w-[320px] select-none"
+                  draggable={false}
+                  style={{ filter: "drop-shadow(0 0 24px rgba(56,224,208,.25))" }}
+                />
                 <div className="flex items-center gap-3">
                   <button className="st-ip" onClick={() => go("trust")} type="button">
                     <span className="a ab">‹</span> Trust By
