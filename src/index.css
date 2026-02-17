@@ -1,0 +1,629 @@
+@import url('https://fonts.googleapis.com/css2?family=Anuphan:wght@100..700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    font-family: "Anuphan", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body, #root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.engFonts {
+     font-family: "Anuphan", sans-serif;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+
+.btn-fancy {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  transition: transform 250ms ease, box-shadow 250ms ease, background 250ms ease;
+  
+}
+
+/* ✅ พื้นหลังตอนชี้ */
+.btn-fancy:hover {
+  background: linear-gradient(270deg, rgb(77, 182, 172) 0%, rgb(0, 109, 119) 100%);
+  color: white;
+}
+
+/* ✅ แสงเฉียงวิ่ง */
+.btn-fancy::before {
+  content: "";
+  position: absolute;
+  inset: -35%;
+  transform: translateX(-140%) skewX(-20deg);
+  transition: transform 2500ms cubic-bezier(.16, 1, .3, 1); /* ช้าลง + นุ่มขึ้น */
+
+
+  background: linear-gradient(
+    125deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.10) 38%,
+    rgba(255, 255, 255, 0.55) 50%,
+    rgba(255, 255, 255, 0.10) 62%,
+    transparent 100%
+  );
+}
+
+.btn-fancy:hover::before {
+  transform: translateX(140%) skewX(-20deg);
+}
+
+
+
+/* =========================================================
+   ORBIT SECTION - NEW CSS (replace old orbit-related css)
+   ========================================================= */
+
+/* --- wrapper: keep static (no rotate) --- */
+.orbit-static {
+  transform: none;
+}
+
+/* --- center float (keep if you had it; safe to include) --- */
+.orbit-float {
+  animation: orbitCenterFloat 3.2s ease-in-out infinite;
+}
+@keyframes orbitCenterFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%      { transform: translateY(-8px); }
+}
+
+/* =========================================================
+   DOTS (existing dots) -> orbit along the circular rings
+   ========================================================= */
+
+/* the dot itself (same look as before, but stable) */
+.orbit-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.35);
+  box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.12);
+  opacity: 0.95;
+}
+
+/* wrapper that rotates around center */
+.orbit-dot-orbit {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+
+  /* start at top of circle */
+  transform: rotate(-90deg);
+  transform-origin: 0 0;
+
+  /* use CSS variables provided inline:
+     --dur: 31.2s (example)
+     --delay: -5.2s etc
+  */
+  animation: orbitDotSpin var(--dur) linear infinite;
+  animation-delay: var(--delay);
+}
+
+/* place dot on radius (must match ring line) */
+.orbit-dot-orbit > .orbit-dot {
+  position: absolute;
+  transform: translateX(var(--r));
+}
+
+/* reverse some dots to create opposite direction movement */
+.orbit-dot-orbit-2,
+.orbit-dot-orbit-4 {
+  animation-direction: reverse;
+}
+
+@keyframes orbitDotSpin {
+  to { transform: rotate(270deg); } /* -90 -> 270 completes one full turn */
+}
+
+/* =========================================================
+   CHIPS floating (subtle up/down, different phases/directions)
+   ========================================================= */
+
+.orbit-bob {
+  transform-origin: center;
+  animation: orbitChipBob 5.8s ease-in-out infinite alternate;
+}
+
+/* different phases */
+.orbit-bob-0 { animation-delay: -0.2s; }
+.orbit-bob-1 { animation-delay: -1.0s; }
+.orbit-bob-2 { animation-delay: -2.1s; }
+.orbit-bob-3 { animation-delay: -3.0s; }
+.orbit-bob-4 { animation-delay: -4.1s; }
+.orbit-bob-5 { animation-delay: -4.8s; }
+
+/* default bob = slightly up */
+@keyframes orbitChipBob {
+  from { transform: translateY(0px); }
+  to   { transform: translateY(-6px); }
+}
+
+/* make some chips bob downward instead (different direction) */
+.orbit-bob-2 { animation-name: orbitChipBobDown; }
+.orbit-bob-4 { animation-name: orbitChipBobDown; }
+
+@keyframes orbitChipBobDown {
+  from { transform: translateY(0px); }
+  to   { transform: translateY(6px); }
+}
+
+/* =========================================================
+   BORDER DRAW (active/hover): thin, exact size, glowing
+   ========================================================= */
+@property --p {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+/* ensure chip can host overlay nicely */
+.orbit-chip {
+   transition: transform 260ms ease;
+  will-change: transform;
+  cursor: pointer;
+ 
+}
+
+/* hover slight scale only */
+.orbit-chip:hover {
+  transform: translateY(-10px) ;
+ 
+  
+   
+}
+
+/* overlay svg visibility */
+.orbit-draw-border {
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+/* ===== กรอบวาด (พอดีกล่องจริง 100%) ===== */
+.orbit-chip::after{
+  content: "";
+  position: absolute;
+  inset: 0;                 /* ✅ เท่ากล่องจริง */
+  border-radius: inherit;   /* ✅ ตามความโค้งของกล่องจริง */
+  pointer-events: none;
+
+  /* ความหนากรอบ: ปรับตรง padding นี้ */
+  padding: 1px;             /* ✅ บางลง/หนาขึ้นได้ */
+
+  /* สีกรอบฟ้า-เขียวแบบเรืองแสง (วาดแบบ conic) */
+  background: conic-gradient(
+    from -260deg,
+    rgba(23, 196, 167, 0.95) 0 var(--p),
+    rgba(78, 190, 255, 0.95) var(--p) var(--p),
+    rgba(0,0,0,0) 0
+  );
+
+  /* ทำให้เหลือแค่ “ขอบ” ไม่เติมด้านใน */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  /* glow */
+  filter: drop-shadow(0 0 6px rgba(59,130,246,0.25))
+          drop-shadow(0 0 6px rgba(16,185,129,0.22));
+
+  opacity: 0;
+}
+
+/* แสดง + เริ่มวาดตอน active/hover */
+.orbit-chip.is-active::after,
+.orbit-chip:hover::after{
+  opacity: 1;
+  animation: orbitBorderDraw 900ms ease-out forwards;
+}
+
+/* วาดจาก 0% -> 100% */
+@keyframes orbitBorderDraw{
+  from { --p: 0%; }
+  to   { --p: 100%; }
+}
+
+/* hidden stroke state */
+.orbit-draw-rect {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+}
+
+/* show + draw when active or hover */
+.orbit-chip.is-active .orbit-draw-border,
+.orbit-chip:hover .orbit-draw-border {
+  opacity: 1;
+}
+
+.orbit-chip.is-active .orbit-draw-rect,
+.orbit-chip:hover .orbit-draw-rect {
+  animation: orbitDrawBorder 900ms ease-out forwards;
+}
+
+@keyframes orbitDrawBorder {
+  to { stroke-dashoffset: 0; }
+}
+
+
+
+.orbit-dot-path {
+  position: absolute;
+  inset: 0;
+  /* ให้จุดวิ่งบนวงกลมรัศมีตาม --rad */
+  offset-path: circle(var(--rad) at 50% 50%);
+  offset-rotate: 0deg;
+  offset-distance: var(--start);
+  animation: dotFollow var(--dur) linear infinite;
+}
+
+/* บางจุดวิ่งสวนทาง เพื่อให้ดูสวนกัน */
+.orbit-dot-path-2,
+.orbit-dot-path-4 {
+  animation-direction: reverse;
+}
+
+/* จุดวางที่ตำแหน่งบน path */
+.orbit-dot-path > .orbit-dot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes dotFollow {
+  to { offset-distance: calc(var(--start) + 100%); }
+}
+
+/* ===== Track ที่มีขนาด “เท่าวงแหวนจริง” แล้วหมุน ===== */
+.orbit-track {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 999px;
+  transform: translate(-50%, -50%) rotate(-90deg); /* เริ่มที่ด้านบน */
+  transform-origin: center;
+  pointer-events: none;
+
+  animation: orbitTrackSpin var(--dur) linear infinite;
+  animation-delay: var(--delay);
+}
+
+/* ให้ track มีขนาดตรงกับ ring div ของคุณ */
+.orbit-track-outer { width: 78%; height: 78%; } /* วงนอก */
+.orbit-track-mid   { width: 58%; height: 58%; } /* วงกลาง */
+
+/* วาง dot ไว้ “บนเส้นวง” (ด้านบนของ track) */
+.orbit-track > .orbit-dot {
+  position: absolute;
+  left: 50%;
+  top: 0%;
+  transform: translate(-50%, -50%); /* ให้ศูนย์กลางจุดทับเส้นพอดี */
+}
+
+/* ทำให้บางจุดวิ่งสวนทาง (ดูสวนกันไปมา) */
+.orbit-dot-run-2,
+.orbit-dot-run-4 {
+  animation-direction: reverse;
+}
+
+@keyframes orbitTrackSpin {
+  to { transform: translate(-50%, -50%) rotate(270deg); } /* -90 -> 270 ครบรอบ */
+}
+
+
+/* ===============================
+   Cursor-follow gradient background
+   (Theme: Blue + Emerald)
+   =============================== */
+
+.cursor-gradient {
+  --mx: 50%;
+  --my: 50%;
+}
+
+.cursor-gradient__layer {
+  background:
+    radial-gradient(
+      520px circle at var(--mx) var(--my),
+      rgba(59, 130, 246, 0.16),
+      rgba(59, 130, 246, 0.07) 35%,
+      rgba(59, 130, 246, 0) 70%
+    ),
+    radial-gradient(
+      620px circle at calc(var(--mx) + 12%) calc(var(--my) + 10%),
+      rgba(16, 185, 129, 0.14),
+      rgba(16, 185, 129, 0.06) 38%,
+      rgba(16, 185, 129, 0) 72%
+    );
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.25) 35%, rgba(0,0,0,1) 60%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.25) 35%, rgba(0,0,0,1) 60%);
+}
+
+
+
+
+
+
+
+/* ===== Strengths Dark Background (mouse follow) ===== */
+.strength-dark {
+  background: #000000;
+}
+
+.strength-dark__bg {
+   opacity: 80;          /* ลดความแรงของ glow */
+  mix-blend-mode: screen; /* ให้ glow กลืนกับรูปสวยขึ้น */
+  --mx: 50%;
+  --my: 50%;
+  background:
+    radial-gradient(700px circle at var(--mx) var(--my),
+      rgba(56,189,248,0.18),
+      rgba(56,189,248,0.06) 40%,
+      rgba(56,189,248,0) 72%),
+    radial-gradient(820px circle at calc(var(--mx) + 14%) calc(var(--my) + 10%),
+      rgba(16,185,129,0.16),
+      rgba(16,185,129,0.05) 44%,
+      rgba(16,185,129,0) 76%),
+    radial-gradient(980px circle at 25% 15%,
+      rgba(168,85,247,0.12),
+      rgba(168,85,247,0.03) 46%,
+      rgba(168,85,247,0) 80%),
+    linear-gradient(180deg, rgba(2,6,23,1) 0%, rgba(2,6,23,0.98) 40%, rgba(2,6,23,1) 100%);
+  background-blend-mode: screen, screen, screen, normal;
+}
+
+/* ===== View transitions (layout 1/2/3) ===== */
+.strength-stage {
+  transition: opacity 260ms ease, transform 260ms ease;
+  will-change: opacity, transform;
+}
+.strength-stage.is-show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.strength-stage.is-hide {
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+}
+
+/* ===== Center cube ===== */
+.strength-cube {
+  position: absolute;
+  left: 50%;
+  top: 250px;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 24px 40px rgba(0,0,0,0.45));
+}
+
+/* ===== Pills (Trust By / Provide To) ===== */
+.strength-pill {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 30px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.80);
+  backdrop-filter: blur(10px);
+  transition: transform 220ms ease, background 220ms ease, border-color 220ms ease;
+  font-weight: 600;
+  font-size: 16px;
+  
+}
+.strength-pill:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.22);
+  
+}
+.strength-pill__arrow {
+  opacity: 0.9;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.strength-pill--left { left: calc(50% - 250px); top: 250px;  }
+.strength-pill--right { left: calc(50% + 100px); top: 250px;  }
+.strength-pill--top { left: 50%; top: -10px; transform: translate(-50%, 0); position: relative; margin-top: 10px; }
+
+/* ===== Dots around cube ===== */
+.strength-dot{
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+.strength-dot__icon{
+  width: 70px;
+  height: 70px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.06);
+  border: 2px solid rgba(255,255,255,0.22);
+  box-shadow: 0 0 0 6px rgba(255,255,255,0.03);
+  backdrop-filter: blur(10px);
+  transition: transform 220ms ease, border-color 220ms ease;
+}
+.strength-dot:hover .strength-dot__icon {
+  transform: translateY(-2px);
+  border-color: rgba(17, 255, 235, 0.932);
+}
+
+/* Tooltip (2 lines, rectangle rounded) */
+/* Tooltip (side) */
+.strength-tooltip{
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 360px;
+  padding: 20px 30px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.78);
+  font-size: 16px;
+  line-height: 1.35;
+  backdrop-filter: blur(12px);
+  opacity: 0;
+  transition: opacity 160ms ease, transform 160ms ease;
+  z-index: 50;
+  white-space: normal;
+  text-align: left;
+}
+
+/* โผล่ด้านขวา (default) */
+
+.strength-tooltip--right{
+  left: calc(100% + 14px);
+  transform: translateY(-50%) translateX(-6px);
+}
+
+/* โผล่ด้านซ้าย */
+.strength-tooltip--left{
+  right: calc(100% + 14px);
+  transform: translateY(-50%) translateX(6px);
+}
+
+/* hover show */
+.strength-dot:hover .strength-tooltip{
+  opacity: 1;
+}
+.strength-dot:hover .strength-tooltip--right{
+  transform: translateY(-50%) translateX(0);
+}
+.strength-dot:hover .strength-tooltip--left{
+  transform: translateY(-50%) translateX(0);
+}
+
+
+/* ลูกศรเล็กๆ */
+/* ลูกศร tooltip */
+.strength-tooltip--right::after,
+.strength-tooltip--left::after{
+  content:"";
+  position:absolute;
+  top:50%;
+  width:10px;
+  height:10px;
+  background: rgba(255,255,255,0.10);
+  border-left: 1px solid rgba(255,255,255,0.14);
+  border-top: 1px solid rgba(255,255,255,0.14);
+  transform: translateY(-50%) rotate(45deg);
+}
+.strength-tooltip--right::after{ left:-6px; }
+.strength-tooltip--left::after{ right:-6px; }
+/* ===== Cards (layout 2/3) ===== */
+.strength-card{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
+}
+.strength-card:hover{
+  transform: translateY(-4px);
+  border-color: rgba(56,189,248,0.35);
+  background: rgba(255,255,255,0.10);
+}
+.strength-card__icon{
+  width: 62px;
+  height: 62px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: rgba(255,255,255,0.06);
+  border: 2px solid rgba(255,255,255,0.22);
+  box-shadow: 0 0 0 6px rgba(255,255,255,0.03);
+}
