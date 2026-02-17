@@ -57,32 +57,64 @@ function injectCSS() {
     .st-ip:hover{background:rgba(255,255,255,.1);border-color:rgba(56,224,208,.25);color:rgba(255,255,255,.9)}
     .st-ip .a{font-size:1rem;line-height:1;transition:transform .3s}
     .st-ip:hover .af{transform:translateX(2px)}.st-ip:hover .ab{transform:translateX(-2px)}
+
+    /* mobile accordion */
+    @keyframes stAcc{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+    .st-acc{display:none}
+    .st-acc.open{display:block;animation:stAcc .18s ease-out both}
   `;
   document.head.appendChild(s);
 }
 
 /* ─── Particles ─── */
 function Particles({ n = 16 }) {
-  const d = useMemo(() => Array.from({ length: n }, () => ({
-    l: `${Math.random() * 100}%`, b: `${Math.random() * 25}%`,
-    d: `${7 + Math.random() * 7}s`, dl: `${Math.random() * 5}s`,
-    s: `${2 + Math.random() * 2.5}px`,
-  })), [n]);
-  return <>{d.map((p, i) => <div key={i} className="st-p" style={{ left: p.l, bottom: p.b, width: p.s, height: p.s, "--d": p.d, "--dl": p.dl }} />)}</>;
+  const d = useMemo(
+    () =>
+      Array.from({ length: n }, () => ({
+        l: `${Math.random() * 100}%`,
+        b: `${Math.random() * 25}%`,
+        d: `${7 + Math.random() * 7}s`,
+        dl: `${Math.random() * 5}s`,
+        s: `${2 + Math.random() * 2.5}px`,
+      })),
+    [n]
+  );
+  return (
+    <>
+      {d.map((p, i) => (
+        <div
+          key={i}
+          className="st-p"
+          style={{
+            left: p.l,
+            bottom: p.b,
+            width: p.s,
+            height: p.s,
+            "--d": p.d,
+            "--dl": p.dl,
+          }}
+        />
+      ))}
+    </>
+  );
 }
 
 /* ─── SVG Connection Lines (center view) ─── */
 function Lines({ on }) {
   const pts = [
-    { x1: "50%", y1: "48%", x2: "10%",  y2: "48%" },
-    { x1: "50%", y1: "48%", x2: "22%",  y2: "12%" },
-    { x1: "50%", y1: "48%", x2: "78%",  y2: "12%" },
-    { x1: "50%", y1: "48%", x2: "90%",  y2: "48%" },
-    { x1: "50%", y1: "48%", x2: "78%",  y2: "84%" },
-    { x1: "50%", y1: "48%", x2: "22%",  y2: "84%" },
+    { x1: "50%", y1: "48%", x2: "10%", y2: "48%" },
+    { x1: "50%", y1: "48%", x2: "22%", y2: "12%" },
+    { x1: "50%", y1: "48%", x2: "78%", y2: "12%" },
+    { x1: "50%", y1: "48%", x2: "90%", y2: "48%" },
+    { x1: "50%", y1: "48%", x2: "78%", y2: "84%" },
+    { x1: "50%", y1: "48%", x2: "22%", y2: "84%" },
   ];
   return (
-    <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none" style={{ zIndex: 0 }}>
+    <svg
+      className="absolute inset-0 w-full h-full pointer-events-none"
+      preserveAspectRatio="none"
+      style={{ zIndex: 0 }}
+    >
       <defs>
         <linearGradient id="slg">
           <stop offset="0%" stopColor="rgba(56,224,208,.22)" />
@@ -90,24 +122,40 @@ function Lines({ on }) {
         </linearGradient>
       </defs>
       {pts.map((l, i) => (
-        <line key={i} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2}
-          stroke="url(#slg)" strokeWidth="1"
+        <line
+          key={i}
+          x1={l.x1}
+          y1={l.y1}
+          x2={l.x2}
+          y2={l.y2}
+          stroke="url(#slg)"
+          strokeWidth="1"
           className={`st-ln ${on ? "on" : ""}`}
-          style={{ animationDelay: `${0.4 + i * 0.12}s` }} />
+          style={{ animationDelay: `${0.4 + i * 0.12}s` }}
+        />
       ))}
     </svg>
   );
 }
 
-/* ─── KeyDot (original layout classes) ─── */
-function KeyDot({ item, posClass, onClick, tooltipSide = "right", isRevealed = false, revealDelay = 0 }) {
+/* ─── KeyDot (desktop center) ─── */
+function KeyDot({
+  item,
+  posClass,
+  onClick,
+  tooltipSide = "right",
+  isRevealed = false,
+  revealDelay = 0,
+}) {
   return (
     <button
       onClick={onClick}
       className={`strength-dot group absolute ${posClass}`}
       style={{
         opacity: isRevealed ? 1 : 0,
-        transform: isRevealed ? "translateY(0) scale(1)" : "translateY(25px) scale(0.75)",
+        transform: isRevealed
+          ? "translateY(0) scale(1)"
+          : "translateY(25px) scale(0.75)",
         transition: `opacity 0.65s cubic-bezier(0.22,1,0.36,1) ${revealDelay}ms, transform 0.65s cubic-bezier(0.22,1,0.36,1) ${revealDelay}ms`,
         zIndex: 2,
       }}
@@ -117,11 +165,15 @@ function KeyDot({ item, posClass, onClick, tooltipSide = "right", isRevealed = f
       </div>
       <div className="mt-2 font-semibold text-white/85">{item.title}</div>
       <div
-        className={`strength-tooltip ${tooltipSide === "left" ? "strength-tooltip--right" : "strength-tooltip--left"} mt-[-55px] ml-5 mr-5`}
+        className={`strength-tooltip ${
+          tooltipSide === "left" ? "strength-tooltip--right" : "strength-tooltip--left"
+        } mt-[-55px] ml-5 mr-5`}
         style={{
           opacity: isRevealed ? 1 : 0,
           transform: isRevealed ? "translateY(0) scale(1)" : "translateY(8px) scale(0.92)",
-          transition: `opacity 0.5s ease ${revealDelay + 400}ms, transform 0.5s ease ${revealDelay + 400}ms`,
+          transition: `opacity 0.5s ease ${revealDelay + 400}ms, transform 0.5s ease ${
+            revealDelay + 400
+          }ms`,
           visibility: isRevealed ? "visible" : "hidden",
           pointerEvents: isRevealed ? "auto" : "none",
         }}
@@ -132,12 +184,20 @@ function KeyDot({ item, posClass, onClick, tooltipSide = "right", isRevealed = f
   );
 }
 
-/* ─── Card (trust/provide views) ─── */
+/* ─── Card (trust/provide desktop views) ─── */
 function EC({ item, dir = "left", dl = 0, on = false }) {
   return (
-    <div className={`st-ec ${on ? (dir === "left" ? "st-cl" : "st-cr") : ""}`}
-      style={{ animationDelay: `${dl}ms`, opacity: on ? undefined : 0, animationFillMode: "forwards" }}>
-      <div className="st-ico"><span className="text-xl">💡</span></div>
+    <div
+      className={`st-ec ${on ? (dir === "left" ? "st-cl" : "st-cr") : ""}`}
+      style={{
+        animationDelay: `${dl}ms`,
+        opacity: on ? undefined : 0,
+        animationFillMode: "forwards",
+      }}
+    >
+      <div className="st-ico">
+        <span className="text-xl">💡</span>
+      </div>
       <div>
         <div className="font-semibold text-white text-[.95rem]">{item.title}</div>
         <div className="mt-1 text-sm leading-relaxed text-white/65">{item.tooltip}</div>
@@ -146,11 +206,62 @@ function EC({ item, dir = "left", dl = 0, on = false }) {
   );
 }
 
+/* ─── Mobile accordion (เปิดทีละอัน) ─── */
+function MobileKeysAccordion({ items, inV = false }) {
+  const [openIdx, setOpenIdx] = useState(null);
+
+  return (
+    <div className="md:hidden">
+      <div className="space-y-2">
+        {items.map((it, idx) => {
+          const open = openIdx === idx;
+
+          return (
+            <div key={it.id}>
+              <button
+                type="button"
+                onClick={() => setOpenIdx((cur) => (cur === idx ? null : idx))}
+                className={[
+                  "w-full text-left flex items-start gap-3 rounded-full px-4 py-3 ring-1",
+                  "bg-white/5 ring-white/15 text-white/85 backdrop-blur",
+                ].join(" ")}
+                style={{
+                  opacity: inV ? 1 : 0,
+                  transform: inV ? "translateY(0)" : "translateY(14px)",
+                  transition: `opacity .55s ease ${200 + idx * 70}ms, transform .55s ease ${
+                    200 + idx * 70
+                  }ms`,
+                }}
+                aria-expanded={open}
+              >
+                <span className="mt-[6px] h-2 w-2 shrink-0 rounded-full bg-emerald-300/90" />
+                <span className="flex-1 text-sm font-semibold leading-snug">{it.title}</span>
+                <span className="ml-2 text-xs opacity-70">{open ? "−" : "+"}</span>
+              </button>
+
+              <div
+                className={[
+                  "st-acc mt-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm leading-relaxed text-white/70 backdrop-blur",
+                  open ? "open" : "",
+                ].join(" ")}
+              >
+                {it.tooltip}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+    
+    </div>
+  );
+}
+
 /* ══════════════════════════════════════════════
    MAIN
    ══════════════════════════════════════════════ */
 export default function SectionStrengths() {
-  const [view, setView] = useState("center");
+  const [view, setView] = useState("center"); // desktop ใช้เหมือนเดิม
   const [inV, setInV] = useState(false);
   const [vk, setVk] = useState(0);
   const secRef = useRef(null);
@@ -158,24 +269,35 @@ export default function SectionStrengths() {
   const tgt = useRef({ x: 50, y: 50 });
   const cur = useRef({ x: 50, y: 50 });
 
-  useEffect(() => { injectCSS(); }, []);
+  useEffect(() => {
+    injectCSS();
+  }, []);
 
   // Intersection Observer
   useEffect(() => {
-    const el = secRef.current; if (!el) return;
-    const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) setInV(true); }, { threshold: 0.18 });
-    o.observe(el); return () => o.disconnect();
+    const el = secRef.current;
+    if (!el) return;
+    const o = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) setInV(true);
+      },
+      { threshold: 0.18 }
+    );
+    o.observe(el);
+    return () => o.disconnect();
   }, []);
 
   // Mouse parallax
   const onM = (e) => {
-    const r = e.currentTarget.getBoundingClientRect(), s = 0.35;
+    const r = e.currentTarget.getBoundingClientRect(),
+      s = 0.35;
     tgt.current.x = 50 + (((e.clientX - r.left) / r.width) * 100 - 50) * s;
     tgt.current.y = 50 + (((e.clientY - r.top) / r.height) * 100 - 50) * s;
   };
 
   useEffect(() => {
-    const el = bgRef.current; if (!el) return;
+    const el = bgRef.current;
+    if (!el) return;
     let raf = 0;
     const lr = (a, b, t) => a + (b - a) * t;
     const tk = () => {
@@ -189,20 +311,29 @@ export default function SectionStrengths() {
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  const go = useCallback((v) => { setView(v); setVk(k => k + 1); }, []);
+  const go = useCallback((v) => {
+    setView(v);
+    setVk((k) => k + 1);
+  }, []);
 
   // 6 Keys
-  const keys = useMemo(() => [
-    { id: "simplicity", title: "Simplicity", tooltip: "เราเชื่อในระบบที่ใช้งานง่าย ช่วยให้ผู้ใช้เข้าใจ กระบวนการ และทำงานได้ด้วยตนเอง อย่างมีประสิทธิภาพ" },
-    { id: "rapidly", title: "Rapidly", tooltip: "ให้ความสำคัญและตอบรับกับการเปลี่ยนแปลง ทางธุรกิจที่เป็นไปอย่างรวดเร็วในปัจจุบัน" },
-    { id: "experience", title: "Experience", tooltip: "เรานำเสนอโซลูชั่น ที่มีคุณภาพ เหมาะสมกับความต้องการ ตอบโจทย์ผู้ใช้งานได้อย่างตรงจุด และคุ้มค่า กับการลงทุน" },
-    { id: "platform", title: "Platform", tooltip: "แพลตฟอร์มที่เชื่อถือได้และยืดหยุ่น รองรับโซลูชั่นหลากหลาย เพิ่มคุณภาพการทำงานและขยายศักยภาพทางธุรกิจ" },
-    { id: "services", title: "Services", tooltip: "บริการครบวงจร ครอบคลุมการบูรณาการเทคโนโลยี เพื่อยกระดับการทำงานในองค์กร และตอบโจทย์ ทางธุรกิจ" },
-    { id: "consulting", title: "Consulting", tooltip: "ที่ปรึกษามืออาชีพ ให้คำแนะนำ รวมทั้งช่วยวางแผน และขับเคลื่อน กลยุทธ์ด้วยความมั่นใจ" },
-  ], []);
+  const keys = useMemo(
+    () => [
+      { id: "simplicity", title: "Simplicity", tooltip: "เราเชื่อในระบบที่ใช้งานง่าย ช่วยให้ผู้ใช้เข้าใจ กระบวนการ และทำงานได้ด้วยตนเอง อย่างมีประสิทธิภาพ" },
+      { id: "rapidly", title: "Rapidly", tooltip: "ให้ความสำคัญและตอบรับกับการเปลี่ยนแปลง ทางธุรกิจที่เป็นไปอย่างรวดเร็วในปัจจุบัน" },
+      { id: "experience", title: "Experience", tooltip: "เรานำเสนอโซลูชั่น ที่มีคุณภาพ เหมาะสมกับความต้องการ ตอบโจทย์ผู้ใช้งานได้อย่างตรงจุด และคุ้มค่า กับการลงทุน" },
+      { id: "platform", title: "Platform", tooltip: "แพลตฟอร์มที่เชื่อถือได้และยืดหยุ่น รองรับโซลูชั่นหลากหลาย เพิ่มคุณภาพการทำงานและขยายศักยภาพทางธุรกิจ" },
+      { id: "services", title: "Services", tooltip: "บริการครบวงจร ครอบคลุมการบูรณาการเทคโนโลยี เพื่อยกระดับการทำงานในองค์กร และตอบโจทย์ ทางธุรกิจ" },
+      { id: "consulting", title: "Consulting", tooltip: "ที่ปรึกษามืออาชีพ ให้คำแนะนำ รวมทั้งช่วยวางแผน และขับเคลื่อน กลยุทธ์ด้วยความมั่นใจ" },
+    ],
+    []
+  );
 
   const trustC = useMemo(() => [keys[0], keys[1], keys[2]], [keys]);
   const provC = useMemo(() => [keys[3], keys[4], keys[5]], [keys]);
+
+  // ✅ Mobile: ไม่มี Overview -> ถ้า view เป็น center ให้ถือว่าเป็น trust
+  const mobileView = view === "center" ? "trust" : view;
 
   return (
     <section ref={secRef} className="relative isolate overflow-hidden py-20 strength-dark" onMouseMove={onM}>
@@ -213,38 +344,107 @@ export default function SectionStrengths() {
 
       <div className="relative z-10 mx-auto max-w-6xl px-6 mt-20 mb-20">
         {/* Header */}
-        <div className="flex flex-col items-center text-center"
-          style={{ opacity: inV ? 1 : 0, transform: inV ? "translateY(0)" : "translateY(24px)", transition: "opacity .7s ease, transform .7s ease" }}>
+        <div
+          className="flex flex-col items-center text-center"
+          style={{
+            opacity: inV ? 1 : 0,
+            transform: inV ? "translateY(0)" : "translateY(24px)",
+            transition: "opacity .7s ease, transform .7s ease",
+          }}
+        >
           <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs tracking-widest text-white/70 backdrop-blur">
-            <span className="h-2 w-2 rounded-full bg-emerald-300" />OUR STRENGTHS
+            <span className="h-2 w-2 rounded-full bg-emerald-300" />
+            OUR STRENGTHS
           </span>
+
           <h2 className="mt-5 text-3xl font-extrabold tracking-tight text-white md:text-4xl">
             Why Businesses Choose{" "}
-            <span className="bg-gradient-to-r from-sky-300 to-emerald-300 bg-clip-text text-transparent">Aileen Solutions</span>
+            <span className="bg-gradient-to-r from-sky-300 to-emerald-300 bg-clip-text text-transparent">
+              Aileen Solutions
+            </span>
           </h2>
+
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/70 md:text-base">
-            6 Keys to Value — เราเชื่อมั่นในสิ่งที่ทำ และมุ่งส่งมอบคุณค่าให้กับองค์กร ผ่านโซลูชัน แพลตฟอร์ม บริการ และการให้คำปรึกษาที่เชื่อถือได้
+            6 Keys to Value — เราเชื่อมั่นในสิ่งที่ทำ และมุ่งส่งมอบคุณค่าให้กับองค์กร ผ่านโซลูชัน แพลตฟอร์ม บริการ
+            และการให้คำปรึกษาที่เชื่อถือได้
           </p>
         </div>
 
+        {/* ✅ Mobile switcher: เหลือแค่ 2 อัน */}
+        <div className="md:hidden mt-8 flex justify-center">
+          <div className="inline-flex rounded-full border border-white/15 bg-white/5 p-1 backdrop-blur">
+            <button
+              type="button"
+              onClick={() => go("trust")}
+              className={[
+                "px-4 py-2 text-xs font-semibold rounded-full transition",
+                mobileView === "trust" ? "bg-white/10 text-white" : "text-white/70 hover:text-white",
+              ].join(" ")}
+            >
+              Trust By
+            </button>
+            <button
+              type="button"
+              onClick={() => go("provide")}
+              className={[
+                "px-4 py-2 text-xs font-semibold rounded-full transition",
+                mobileView === "provide" ? "bg-white/10 text-white" : "text-white/70 hover:text-white",
+              ].join(" ")}
+            >
+              Provide To
+            </button>
+          </div>
+        </div>
+
         {/* ═══ STAGES ═══ */}
-        <div className="mt-14 relative">
+        <div className="mt-10 md:mt-14 relative">
+          {/* ─── MOBILE CONTENT (ไม่มี Overview) ─── */}
+          <div className="md:hidden">
+            <div className="flex items-center justify-center gap-3 mb-4 mt-6">
+              <img
+                src={cubeImg}
+                alt="Cube"
+                className="w-[110px] select-none"
+                draggable={false}
+                style={{ filter: "drop-shadow(0 0 18px rgba(56,224,208,.22))" }}
+              />
+            </div>
 
-          {/* ─── CENTER (original layout) ─── */}
-          <div className={`strength-stage ${view === "center" ? "is-show" : "is-hide"}`}>
+            {mobileView === "trust" ? (
+              <>
+                <div className="flex justify-center mb-4">
+                  <span className="st-bdg inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/5 px-5 py-2 text-sm font-medium text-emerald-300 backdrop-blur-sm">
+                    <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                    Trust By — สิ่งที่เรายึดมั่น
+                  </span>
+                </div>
+
+                {/* ✅ key = mobileView เพื่อ reset การเปิด/ปิดทุกครั้งที่สลับแท็บ */}
+                <MobileKeysAccordion key="trust" items={trustC} inV={inV} />
+              </>
+            ) : (
+              <>
+                <div className="flex justify-center mb-4">
+                  <span className="st-bdg inline-flex items-center gap-2 rounded-full border border-sky-400/20 bg-sky-400/5 px-5 py-2 text-sm font-medium text-sky-300 backdrop-blur-sm">
+                    <span className="h-2 w-2 rounded-full bg-sky-400 animate-pulse" />
+                    Provide To — สิ่งที่เราส่งมอบ
+                  </span>
+                </div>
+
+                <MobileKeysAccordion key="provide" items={provC} inV={inV} />
+              </>
+            )}
+          </div>
+
+          {/* ─── DESKTOP: ORIGINAL (เหมือนเดิมทั้งหมด) ─── */}
+          <div className={`strength-stage hidden md:block ${view === "center" ? "is-show" : "is-hide"}`}>
             <div className="relative mx-auto h-[520px] max-w-5xl">
-
               <Lines on={inV} />
 
-              {/* cube center — original class + scroll animation */}
-              <div
-                className={`strength-cube mt-5 ${inV ? "st-cube-anim" : ""}`}
-                style={{ opacity: inV ? 1 : 0, transition: "opacity 0.7s ease 0.1s" }}
-              >
+              <div className={`strength-cube mt-5 ${inV ? "st-cube-anim" : ""}`} style={{ opacity: inV ? 1 : 0, transition: "opacity 0.7s ease 0.1s" }}>
                 <img src={cubeImg} alt="Cube" className="w-[250px] select-none" draggable={false} />
               </div>
 
-              {/* original pills */}
               <button
                 className="strength-pill strength-pill--left"
                 onClick={() => go("trust")}
@@ -271,18 +471,16 @@ export default function SectionStrengths() {
                 Provide To <span className="strength-pill__arrow">›</span>
               </button>
 
-              {/* 6 dots — original positions */}
-              <KeyDot item={keys[0]} posClass="top-[230px] left-[90px]"      tooltipSide="right" onClick={() => go("trust")}   isRevealed={inV} revealDelay={300} />
-              <KeyDot item={keys[1]} posClass="top-[50px] left-[200px]"      tooltipSide="right" onClick={() => go("trust")}   isRevealed={inV} revealDelay={450} />
-              <KeyDot item={keys[2]} posClass="top-[50px] right-[200px]"     tooltipSide="left"  onClick={() => go("trust")}   isRevealed={inV} revealDelay={600} />
-              <KeyDot item={keys[3]} posClass="top-[230px] right-[90px]"     tooltipSide="left"  onClick={() => go("provide")} isRevealed={inV} revealDelay={750} />
-              <KeyDot item={keys[4]} posClass="bottom-[30px] right-[200px]"  tooltipSide="left"  onClick={() => go("provide")} isRevealed={inV} revealDelay={900} />
-              <KeyDot item={keys[5]} posClass="bottom-[30px] left-[200px]"   tooltipSide="right" onClick={() => go("provide")} isRevealed={inV} revealDelay={1050} />
+              <KeyDot item={keys[0]} posClass="top-[230px] left-[90px]" tooltipSide="right" onClick={() => go("trust")} isRevealed={inV} revealDelay={300} />
+              <KeyDot item={keys[1]} posClass="top-[50px] left-[200px]" tooltipSide="right" onClick={() => go("trust")} isRevealed={inV} revealDelay={450} />
+              <KeyDot item={keys[2]} posClass="top-[50px] right-[200px]" tooltipSide="left" onClick={() => go("trust")} isRevealed={inV} revealDelay={600} />
+              <KeyDot item={keys[3]} posClass="top-[230px] right-[90px]" tooltipSide="left" onClick={() => go("provide")} isRevealed={inV} revealDelay={750} />
+              <KeyDot item={keys[4]} posClass="bottom-[30px] right-[200px]" tooltipSide="left" onClick={() => go("provide")} isRevealed={inV} revealDelay={900} />
+              <KeyDot item={keys[5]} posClass="bottom-[30px] left-[200px]" tooltipSide="right" onClick={() => go("provide")} isRevealed={inV} revealDelay={1050} />
             </div>
           </div>
 
-          {/* ─── TRUST ─── */}
-          <div className={`strength-stage ${view === "trust" ? "is-show" : "is-hide"}`}>
+          <div className={`strength-stage hidden md:block ${view === "trust" ? "is-show" : "is-hide"}`}>
             {view === "trust" && (
               <div className="flex justify-center mb-8">
                 <span className="st-bdg inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/5 px-5 py-2 text-sm font-medium text-emerald-300 backdrop-blur-sm">
@@ -292,16 +490,13 @@ export default function SectionStrengths() {
               </div>
             )}
             <div className="relative mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-2" key={`t${vk}`}>
-              {/* cards left */}
               <div className="space-y-4">
                 {trustC.map((it, i) => (
                   <EC key={it.id} item={it} dir="left" dl={i * 140} on={view === "trust"} />
                 ))}
               </div>
-              {/* cube right + nav buttons */}
               <div className={`relative flex flex-col items-center gap-5 ${view === "trust" ? "st-cbr" : ""}`}>
-                <img src={cubeImg} alt="Cube" className="w-[320px] select-none" draggable={false}
-                  style={{ filter: "drop-shadow(0 0 24px rgba(56,224,208,.25))" }} />
+                <img src={cubeImg} alt="Cube" className="w-[320px] select-none" draggable={false} style={{ filter: "drop-shadow(0 0 24px rgba(56,224,208,.25))" }} />
                 <div className="flex items-center gap-3">
                   <button className="st-ip" onClick={() => go("center")} type="button">
                     <span className="a ab">‹</span> Overview
@@ -314,8 +509,7 @@ export default function SectionStrengths() {
             </div>
           </div>
 
-          {/* ─── PROVIDE ─── */}
-          <div className={`strength-stage ${view === "provide" ? "is-show" : "is-hide"}`}>
+          <div className={`strength-stage hidden md:block ${view === "provide" ? "is-show" : "is-hide"}`}>
             {view === "provide" && (
               <div className="flex justify-center mb-8">
                 <span className="st-bdg inline-flex items-center gap-2 rounded-full border border-sky-400/20 bg-sky-400/5 px-5 py-2 text-sm font-medium text-sky-300 backdrop-blur-sm">
@@ -325,10 +519,8 @@ export default function SectionStrengths() {
               </div>
             )}
             <div className="relative mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-2" key={`p${vk}`}>
-              {/* cube left + nav buttons */}
               <div className={`relative flex flex-col items-center gap-5 ${view === "provide" ? "st-cbl" : ""}`}>
-                <img src={cubeImg} alt="Cube" className="w-[320px] select-none" draggable={false}
-                  style={{ filter: "drop-shadow(0 0 24px rgba(56,224,208,.25))" }} />
+                <img src={cubeImg} alt="Cube" className="w-[320px] select-none" draggable={false} style={{ filter: "drop-shadow(0 0 24px rgba(56,224,208,.25))" }} />
                 <div className="flex items-center gap-3">
                   <button className="st-ip" onClick={() => go("trust")} type="button">
                     <span className="a ab">‹</span> Trust By
@@ -338,7 +530,6 @@ export default function SectionStrengths() {
                   </button>
                 </div>
               </div>
-              {/* cards right */}
               <div className="space-y-4">
                 {provC.map((it, i) => (
                   <EC key={it.id} item={it} dir="right" dl={i * 140} on={view === "provide"} />
@@ -346,7 +537,6 @@ export default function SectionStrengths() {
               </div>
             </div>
           </div>
-
         </div>
         {/* end stages */}
       </div>
