@@ -156,14 +156,7 @@ function Particles({ n = 16 }) {
 
 /* ─── SVG Connection Lines (center view) ─── */
 function Lines({ on }) {
-  const pts = [
-    { x1: "50%", y1: "48%", x2: "10%", y2: "48%" },
-    { x1: "50%", y1: "48%", x2: "22%", y2: "12%" },
-    { x1: "50%", y1: "48%", x2: "78%", y2: "12%" },
-    { x1: "50%", y1: "48%", x2: "90%", y2: "48%" },
-    { x1: "50%", y1: "48%", x2: "78%", y2: "84%" },
-    { x1: "50%", y1: "48%", x2: "22%", y2: "84%" },
-  ];
+ 
   return (
     <svg
       className="absolute inset-0 w-full h-full pointer-events-none"
@@ -471,8 +464,6 @@ export default function SectionStrengths() {
         <div className="mt-10 md:mt-14 relative">
           {/* ─── MOBILE CONTENT ─── */}
           <div className="md:hidden">
-           
-
             {/* section cue */}
             <div className="flex justify-center mb-5">
               {mobileView === "trust" ? (
@@ -495,28 +486,23 @@ export default function SectionStrengths() {
               <MobileKeysList key="m-provide" items={provC} inV={inV} />
             )}
 
-             {/* cube: อยู่ใต้แท็บ ไม่ทับ (ลดขนาด/เพิ่ม margin) */}
-            <div className="st-mobileCubeWrap flex items-center justify-center mt-[50%]  mr-[-45%]">
-              <img
-                src={cubeImg}
-                alt="Cube"
-                className={`w-[156px] select-none ${inV ? "st-cube-anim" : ""}`}
-                draggable={false}
-                style={{ filter: "drop-shadow(0 0 18px rgba(56,224,208,.22))" }}
-              />
-            </div>
+            {/* ✅ Mobile: ซ่อน Cube ไปเลย */}
+            {/* (ตั้งใจลบออกเพื่อไม่ให้แสดงบนมือถือ) */}
           </div>
 
           {/* ─── DESKTOP: ORIGINAL (เหมือนเดิมทั้งหมด) ─── */}
           <div className={`strength-stage hidden md:block ${view === "center" ? "is-show" : "is-hide"}`}>
             <div className="relative mx-auto h-[520px] max-w-5xl">
-              <Lines on={inV} />
+            
 
+              {/* ✅ Desktop center: ทำให้ Cube อยู่กึ่งกลางจริง ๆ */}
               <div
-                className={`strength-cube mt-5 ${inV ? "st-cube-anim" : ""}`}
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[1]"
                 style={{ opacity: inV ? 1 : 0, transition: "opacity 0.7s ease 0.1s" }}
               >
-                <img src={cubeImg} alt="Cube" className="w-[250px] select-none" draggable={false} />
+                <div className={`${inV ? "st-cube-anim" : ""}`}>
+                  <img src={cubeImg} alt="Cube" className="w-[250px] select-none" draggable={false} />
+                </div>
               </div>
 
               <button
@@ -545,12 +531,54 @@ export default function SectionStrengths() {
                 Provide To <span className="strength-pill__arrow">›</span>
               </button>
 
-              <KeyDot item={keys[0]} posClass="top-[230px] left-[90px]" tooltipSide="right" onClick={() => go("trust")} isRevealed={inV} revealDelay={300} />
-              <KeyDot item={keys[1]} posClass="top-[50px] left-[200px]" tooltipSide="right" onClick={() => go("trust")} isRevealed={inV} revealDelay={450} />
-              <KeyDot item={keys[2]} posClass="top-[50px] right-[200px]" tooltipSide="left" onClick={() => go("trust")} isRevealed={inV} revealDelay={600} />
-              <KeyDot item={keys[3]} posClass="top-[230px] right-[90px]" tooltipSide="left" onClick={() => go("provide")} isRevealed={inV} revealDelay={750} />
-              <KeyDot item={keys[4]} posClass="bottom-[30px] right-[200px]" tooltipSide="left" onClick={() => go("provide")} isRevealed={inV} revealDelay={900} />
-              <KeyDot item={keys[5]} posClass="bottom-[30px] left-[200px]" tooltipSide="right" onClick={() => go("provide")} isRevealed={inV} revealDelay={1050} />
+              <KeyDot
+                item={keys[0]}
+                posClass="top-[230px] left-[90px]"
+                tooltipSide="right"
+                onClick={() => go("trust")}
+                isRevealed={inV}
+                revealDelay={300}
+              />
+              <KeyDot
+                item={keys[1]}
+                posClass="top-[50px] left-[200px]"
+                tooltipSide="right"
+                onClick={() => go("trust")}
+                isRevealed={inV}
+                revealDelay={450}
+              />
+              <KeyDot
+                item={keys[2]}
+                posClass="top-[50px] right-[200px]"
+                tooltipSide="left"
+                onClick={() => go("trust")}
+                isRevealed={inV}
+                revealDelay={600}
+              />
+              <KeyDot
+                item={keys[3]}
+                posClass="top-[230px] right-[90px]"
+                tooltipSide="left"
+                onClick={() => go("provide")}
+                isRevealed={inV}
+                revealDelay={750}
+              />
+              <KeyDot
+                item={keys[4]}
+                posClass="bottom-[30px] right-[200px]"
+                tooltipSide="left"
+                onClick={() => go("provide")}
+                isRevealed={inV}
+                revealDelay={900}
+              />
+              <KeyDot
+                item={keys[5]}
+                posClass="bottom-[30px] left-[200px]"
+                tooltipSide="right"
+                onClick={() => go("provide")}
+                isRevealed={inV}
+                revealDelay={1050}
+              />
             </div>
           </div>
 
