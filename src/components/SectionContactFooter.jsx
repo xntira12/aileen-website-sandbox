@@ -29,10 +29,12 @@ function injectCSS() {
     border-color: rgba(56,224,208,.2);
     box-shadow: 0 0 60px rgba(56,224,208,.06);
   }
+
   .ct5-divider {
     height: 1px;
     background: linear-gradient(90deg, transparent 5%, rgba(56,224,208,.15) 30%, rgba(14,165,233,.12) 70%, transparent 95%);
   }
+
   .ct5-link {
     color: rgba(255,255,255,.5);
     text-decoration: none;
@@ -42,6 +44,7 @@ function injectCSS() {
     padding: 3px 0;
   }
   .ct5-link:hover { color: #38e0d0; }
+
   .ct5-chip {
     display: inline-flex;
     align-items: center;
@@ -52,6 +55,7 @@ function injectCSS() {
     transition: color .25s;
   }
   .ct5-chip:hover { color: #38e0d0; }
+
   .ct5-map-wrap {
     border-radius: 12px;
     overflow: hidden;
@@ -72,9 +76,8 @@ function injectCSS() {
     filter: grayscale(.3) brightness(.85);
     transition: filter .3s;
   }
-  .ct5-map-wrap:hover iframe {
-    filter: grayscale(0) brightness(1);
-  }
+  .ct5-map-wrap:hover iframe { filter: grayscale(0) brightness(1); }
+
   .ct5-map-overlay {
     position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
@@ -84,6 +87,7 @@ function injectCSS() {
     border-radius: 12px;
   }
   .ct5-map-wrap:hover .ct5-map-overlay { opacity: 1; }
+
   .ct5-map-btn {
     padding: 6px 16px;
     border-radius: 999px;
@@ -94,20 +98,61 @@ function injectCSS() {
     font-weight: 600;
     backdrop-filter: blur(8px);
   }
+
   @keyframes ct5Up { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:none; } }
   .ct5-rv { opacity:0 }
   .ct5-rv.on { animation: ct5Up .65s cubic-bezier(.22,1,.36,1) forwards; }
+
+  /* ✅ helper class for footer columns */
+  .ct5-colTitle{
+    color: rgba(255,255,255,.3);
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+
   @media(max-width:768px) {
     .ct5-card { padding: 40px 24px; }
     .ct5-fg { grid-template-columns: 1fr 1fr !important; }
+
+    /* ✅ CENTER FOOTER ON MOBILE (≤768px) */
+    .ct5-fg{
+      text-align: center;
+      justify-items: center;
+    }
+    .ct5-logoRow{
+      justify-content: center !important;
+    }
+    .ct5-socialRow{
+      justify-content: center !important;
+    }
+    .ct5-solCol a{
+      text-align: center;
+    }
+    .ct5-contactCol .ct5-chip{
+      justify-content: center;
+    }
+    .ct5-mapCol{
+      width: 100%;
+      max-width: 420px;
+    }
+    .ct5-mapCol .ct5-map-wrap{
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .ct5-mapCol .ct5-chip{
+      justify-content: center;
+    }
   }
+
   @media(max-width:500px) {
     .ct5-fg { grid-template-columns: 1fr !important; }
   }
   `;
   document.head.appendChild(s);
 }
-
 
 const GMAP_URL =
   "https://www.google.com/maps/place/%E0%B8%AD%E0%B8%B2%E0%B8%84%E0%B8%B2%E0%B8%A3+%E0%B9%80%E0%B8%88%E0%B8%B5%E0%B8%A2%E0%B8%A1%E0%B8%88%E0%B8%A3%E0%B8%A3%E0%B8%A2%E0%B9%8C/@13.6730174,100.5023752,17z/data=!3m1!4b1!4m6!3m5!1s0x30e2a213551fedc5:0x5be1f077764e696f!8m2!3d13.6730122!4d100.5072461!16s%2Fg%2F1hm44gy3t?entry=ttu&g_ep=EgoyMDI2MDIxMS4wIKXMDSoASAFQAw%3D%3D";
@@ -292,7 +337,7 @@ export default function SectionContactDark() {
           </div>
         </div>
 
-        {/* ═══ DIVIDER (visible teal glow line) ═══ */}
+        {/* ═══ DIVIDER ═══ */}
         <div style={{ padding: "0 40px", marginTop: 72 }}>
           <div className="ct5-divider" />
         </div>
@@ -313,6 +358,7 @@ export default function SectionContactDark() {
             {/* Col 1: Logo */}
             <div>
               <div
+                className="ct5-logoRow"
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -336,6 +382,7 @@ export default function SectionContactDark() {
                   AILEEN SOLUTIONS
                 </span>
               </div>
+
               <p
                 style={{
                   color: "rgba(255,255,255,.35)",
@@ -347,8 +394,12 @@ export default function SectionContactDark() {
                 <br />
                 Driving Business Innovation
               </p>
+
               {/* Social row */}
-              <div style={{ display: "flex", gap: 12, marginTop: 16 }}>
+              <div
+                className="ct5-socialRow"
+                style={{ display: "flex", gap: 12, marginTop: 16 }}
+              >
                 <a
                   href="https://www.facebook.com/profile.php?id=61565288523413"
                   target="_blank"
@@ -409,59 +460,21 @@ export default function SectionContactDark() {
             </div>
 
             {/* Col 2: Solutions */}
-            <div>
-              <div
-                style={{
-                  color: "rgba(255,255,255,.3)",
-                  fontSize: ".7rem",
-                  fontWeight: 600,
-                  letterSpacing: ".08em",
-                  marginBottom: 14,
-                  textTransform: "uppercase",
-                }}
-              >
-                Solutions
-              </div>
-              <a href="#" className="ct5-link">
-                Quality Management Platform
-              </a>
-              <a href="#" className="ct5-link">
-                Low-Code Business Orchestrator
-              </a>
-              <a href="#" className="ct5-link">
-                Process Management Platform
-              </a>
-              <a href="#" className="ct5-link">
-                Robotic Process Automation
-              </a>
-              <a href="#" className="ct5-link">
-                Domain-Specific Generative AI
-              </a>
-              <a href="#" className="ct5-link">
-                Supply Chain Resilience
-              </a>
-              <a href="#" className="ct5-link">
-                ERP Workspace
-              </a>
+            <div className="ct5-solCol">
+              <div className="ct5-colTitle">Solutions</div>
+              <a href="#" className="ct5-link">Quality Management Platform</a>
+              <a href="#" className="ct5-link">Low-Code Business Orchestrator</a>
+              <a href="#" className="ct5-link">Process Management Platform</a>
+              <a href="#" className="ct5-link">Robotic Process Automation</a>
+              <a href="#" className="ct5-link">Domain-Specific Generative AI</a>
+              <a href="#" className="ct5-link">Supply Chain Resilience</a>
+              <a href="#" className="ct5-link">ERP Workspace</a>
             </div>
 
             {/* Col 3: Contact */}
-            <div>
-              <div
-                style={{
-                  color: "rgba(255,255,255,.3)",
-                  fontSize: ".7rem",
-                  fontWeight: 600,
-                  letterSpacing: ".08em",
-                  marginBottom: 14,
-                  textTransform: "uppercase",
-                }}
-              >
-                Contact
-              </div>
-              <div
-                style={{ display: "flex", flexDirection: "column", gap: 10 }}
-              >
+            <div className="ct5-contactCol">
+              <div className="ct5-colTitle">Contact</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 <a href="mailto:hello@aileen.co.th" className="ct5-chip">
                   <span style={{ color: "rgba(255,255,255,.35)" }}>✉</span>
                   <span>info@aileensolutions.com</span>
@@ -474,19 +487,8 @@ export default function SectionContactDark() {
             </div>
 
             {/* Col 4: Map */}
-            <div>
-              <div
-                style={{
-                  color: "rgba(255,255,255,.3)",
-                  fontSize: ".7rem",
-                  fontWeight: 600,
-                  letterSpacing: ".08em",
-                  marginBottom: 14,
-                  textTransform: "uppercase",
-                }}
-              >
-                Location
-              </div>
+            <div className="ct5-mapCol">
+              <div className="ct5-colTitle">Location</div>
               <a
                 href={GMAP_URL}
                 target="_blank"

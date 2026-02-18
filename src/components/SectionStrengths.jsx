@@ -1,6 +1,19 @@
-import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
+import React, {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useCallback,
+} from "react";
 import cubeImg from "../assets/img/home/cube.png";
 import stBg from "../assets/img/home/st-bg.png";
+import consultIco from "../assets/img/home/icon/consult.svg";
+import experienceIco from "../assets/img/home/icon/experience.svg";
+import heartIco from "../assets/img/home/icon/heart.svg";
+import platformIco from "../assets/img/home/icon/platform.svg";
+import rapidlyIco from "../assets/img/home/icon/rapidly.svg";
+import simplifyIco from "../assets/img/home/icon/simplify.svg";
+
 
 /* ══════════════════════════════════════════════
    Injected CSS (mobile layout + tabs + cards + fix cube overlap)
@@ -132,7 +145,7 @@ function Particles({ n = 16 }) {
         dl: `${Math.random() * 5}s`,
         s: `${2 + Math.random() * 2.5}px`,
       })),
-    [n]
+    [n],
   );
   return (
     <>
@@ -156,7 +169,6 @@ function Particles({ n = 16 }) {
 
 /* ─── SVG Connection Lines (center view) ─── */
 function Lines({ on }) {
- 
   return (
     <svg
       className="absolute inset-0 w-full h-full pointer-events-none"
@@ -198,7 +210,7 @@ function KeyDot({
   return (
     <button
       onClick={onClick}
-      className={`strength-dot group absolute ${posClass}`}
+      className={`text-sm strength-dot group absolute ${posClass}`}
       style={{
         opacity: isRevealed ? 1 : 0,
         transform: isRevealed
@@ -208,17 +220,28 @@ function KeyDot({
         zIndex: 2,
       }}
     >
-      <div className={`strength-dot__icon relative ${isRevealed ? "st-ring" : ""}`}>
-        <span className="text-lg">💡</span>
+      <div
+        className={`strength-dot__icon relative ${isRevealed ? "st-ring" : ""}`}
+      >
+        <img
+          src={item.icon}
+          alt=""
+          className="h-10 w-10 select-none"
+          draggable={false}
+        />
       </div>
       <div className="mt-2 font-semibold text-white/85">{item.title}</div>
       <div
         className={`strength-tooltip ${
-          tooltipSide === "left" ? "strength-tooltip--right" : "strength-tooltip--left"
-        } mt-[-55px] ml-5 mr-5`}
+          tooltipSide === "left"
+            ? "strength-tooltip--right"
+            : "strength-tooltip--left"
+        } mt-[-55px] ml-5 mr-5  `}
         style={{
           opacity: isRevealed ? 1 : 0,
-          transform: isRevealed ? "translateY(0) scale(1)" : "translateY(8px) scale(0.92)",
+          transform: isRevealed
+            ? "translateY(0) scale(1)"
+            : "translateY(8px) scale(0.92)",
           transition: `opacity 0.5s ease ${revealDelay + 400}ms, transform 0.5s ease ${
             revealDelay + 400
           }ms`,
@@ -244,11 +267,20 @@ function EC({ item, dir = "left", dl = 0, on = false }) {
       }}
     >
       <div className="st-ico">
-        <span className="text-xl">💡</span>
+        <img
+          src={item.icon}
+          alt=""
+          className="h-8 w-8 select-none"
+          draggable={false}
+        />
       </div>
       <div>
-        <div className="font-semibold text-white text-[.95rem]">{item.title}</div>
-        <div className="mt-1 text-sm leading-relaxed text-white/65">{item.tooltip}</div>
+        <div className="font-semibold text-white text-[.95rem]">
+          {item.title}
+        </div>
+        <div className="mt-1 text-sm leading-relaxed text-white/65">
+          {item.tooltip}
+        </div>
       </div>
     </div>
   );
@@ -266,12 +298,21 @@ function MobileKeysList({ items, inV = false }) {
         >
           <div className="relative z-[1] flex items-start gap-3">
             <div className="mt-[2px] grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/15 bg-white/10 text-[18px] shadow-sm">
-              <span aria-hidden="true">{it.icon ?? "💡"}</span>
+              <img
+                src={it.icon}
+                alt=""
+                className="h-5 w-5 select-none"
+                draggable={false}
+              />
             </div>
 
             <div className="min-w-0">
-              <div className="text-[.95rem] font-semibold text-white/90">{it.title}</div>
-              <div className="mt-1 text-sm leading-relaxed text-white/70">{it.tooltip}</div>
+              <div className="text-[.95rem] font-semibold text-white/90">
+                {it.title}
+              </div>
+              <div className="mt-1 text-sm leading-relaxed text-white/70">
+                {it.tooltip}
+              </div>
             </div>
           </div>
         </div>
@@ -304,7 +345,7 @@ export default function SectionStrengths() {
       ([e]) => {
         if (e.isIntersecting) setInV(true);
       },
-      { threshold: 0.18 }
+      { threshold: 0.18 },
     );
     o.observe(el);
     return () => o.disconnect();
@@ -345,45 +386,47 @@ export default function SectionStrengths() {
       {
         id: "simplicity",
         title: "Simplicity",
-        icon: "✨",
+        icon: simplifyIco,
         tooltip:
           "เราเชื่อในระบบที่ใช้งานง่าย ช่วยให้ผู้ใช้เข้าใจ กระบวนการ และทำงานได้ด้วยตนเอง อย่างมีประสิทธิภาพ",
       },
       {
         id: "rapidly",
         title: "Rapidly",
-        icon: "⚡",
-        tooltip: "ให้ความสำคัญและตอบรับกับการเปลี่ยนแปลง ทางธุรกิจที่เป็นไปอย่างรวดเร็วในปัจจุบัน",
+        icon: rapidlyIco,
+        tooltip:
+          "ให้ความสำคัญและตอบรับกับการเปลี่ยนแปลง ทางธุรกิจที่เป็นไปอย่างรวดเร็วในปัจจุบัน",
       },
       {
         id: "experience",
         title: "Experience",
-        icon: "🏆",
+        icon: experienceIco,
         tooltip:
           "เรานำเสนอโซลูชั่น ที่มีคุณภาพ เหมาะสมกับความต้องการ ตอบโจทย์ผู้ใช้งานได้อย่างตรงจุด และคุ้มค่า กับการลงทุน",
       },
       {
         id: "platform",
         title: "Platform",
-        icon: "🧩",
+        icon: platformIco,
         tooltip:
           "แพลตฟอร์มที่เชื่อถือได้และยืดหยุ่น รองรับโซลูชั่นหลากหลาย เพิ่มคุณภาพการทำงานและขยายศักยภาพทางธุรกิจ",
       },
       {
         id: "services",
         title: "Services",
-        icon: "🛠️",
+        icon: heartIco,
         tooltip:
           "บริการครบวงจร ครอบคลุมการบูรณาการเทคโนโลยี เพื่อยกระดับการทำงานในองค์กร และตอบโจทย์ ทางธุรกิจ",
       },
       {
         id: "consulting",
         title: "Consulting",
-        icon: "🧭",
-        tooltip: "ที่ปรึกษามืออาชีพ ให้คำแนะนำ รวมทั้งช่วยวางแผน และขับเคลื่อน กลยุทธ์ด้วยความมั่นใจ",
+        icon: consultIco,
+        tooltip:
+          "ที่ปรึกษามืออาชีพ ให้คำแนะนำ รวมทั้งช่วยวางแผน และขับเคลื่อน กลยุทธ์ด้วยความมั่นใจ",
       },
     ],
-    []
+    [],
   );
 
   const trustC = useMemo(() => [keys[0], keys[1], keys[2]], [keys]);
@@ -405,7 +448,10 @@ export default function SectionStrengths() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-30 h-full w-full object-cover opacity-60"
       />
-      <div ref={bgRef} className="strength-dark__bg pointer-events-none absolute inset-0 -z-20" />
+      <div
+        ref={bgRef}
+        className="strength-dark__bg pointer-events-none absolute inset-0 -z-20"
+      />
       {inV && (
         <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
           <Particles />
@@ -435,7 +481,8 @@ export default function SectionStrengths() {
           </h2>
 
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/70 md:text-base">
-            6 Keys to Value — เราเชื่อมั่นในสิ่งที่ทำ และมุ่งส่งมอบคุณค่าให้กับองค์กร ผ่านโซลูชัน แพลตฟอร์ม บริการ
+            6 Keys to Value — เราเชื่อมั่นในสิ่งที่ทำ
+            และมุ่งส่งมอบคุณค่าให้กับองค์กร ผ่านโซลูชัน แพลตฟอร์ม บริการ
             และการให้คำปรึกษาที่เชื่อถือได้
           </p>
         </div>
@@ -491,17 +538,25 @@ export default function SectionStrengths() {
           </div>
 
           {/* ─── DESKTOP: ORIGINAL (เหมือนเดิมทั้งหมด) ─── */}
-          <div className={`strength-stage hidden md:block ${view === "center" ? "is-show" : "is-hide"}`}>
+          <div
+            className={`strength-stage hidden md:block ${view === "center" ? "is-show" : "is-hide"}`}
+          >
             <div className="relative mx-auto h-[520px] max-w-5xl">
-            
-
               {/* ✅ Desktop center: ทำให้ Cube อยู่กึ่งกลางจริง ๆ */}
               <div
                 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[1]"
-                style={{ opacity: inV ? 1 : 0, transition: "opacity 0.7s ease 0.1s" }}
+                style={{
+                  opacity: inV ? 1 : 0,
+                  transition: "opacity 0.7s ease 0.1s",
+                }}
               >
                 <div className={`${inV ? "st-cube-anim" : ""}`}>
-                  <img src={cubeImg} alt="Cube" className="w-[250px] select-none" draggable={false} />
+                  <img
+                    src={cubeImg}
+                    alt="Cube"
+                    className="w-[210px] select-none mr-5 mt-[70px]"
+                    draggable={false}
+                  />
                 </div>
               </div>
 
@@ -512,10 +567,12 @@ export default function SectionStrengths() {
                 style={{
                   opacity: inV ? 1 : 0,
                   transform: inV ? "translateX(0)" : "translateX(25px)",
-                  transition: "opacity 0.6s ease 700ms, transform 0.6s ease 700ms",
+                  transition:
+                    "opacity 0.6s ease 700ms, transform 0.6s ease 700ms",
                 }}
               >
-                <span className="strength-pill__arrow rotate-180">›</span>Trust By
+                <span className="strength-pill__arrow rotate-180">›</span>Trust
+                By
               </button>
 
               <button
@@ -525,7 +582,8 @@ export default function SectionStrengths() {
                 style={{
                   opacity: inV ? 1 : 0,
                   transform: inV ? "translateX(0)" : "translateX(-25px)",
-                  transition: "opacity 0.6s ease 700ms, transform 0.6s ease 700ms",
+                  transition:
+                    "opacity 0.6s ease 700ms, transform 0.6s ease 700ms",
                 }}
               >
                 Provide To <span className="strength-pill__arrow">›</span>
@@ -533,7 +591,7 @@ export default function SectionStrengths() {
 
               <KeyDot
                 item={keys[0]}
-                posClass="top-[230px] left-[90px]"
+                posClass="top-[230px] left-[150px]"
                 tooltipSide="right"
                 onClick={() => go("trust")}
                 isRevealed={inV}
@@ -541,7 +599,7 @@ export default function SectionStrengths() {
               />
               <KeyDot
                 item={keys[1]}
-                posClass="top-[50px] left-[200px]"
+                posClass="top-[50px] left-[280px]"
                 tooltipSide="right"
                 onClick={() => go("trust")}
                 isRevealed={inV}
@@ -549,7 +607,7 @@ export default function SectionStrengths() {
               />
               <KeyDot
                 item={keys[2]}
-                posClass="top-[50px] right-[200px]"
+                posClass="top-[50px] right-[280px]"
                 tooltipSide="left"
                 onClick={() => go("trust")}
                 isRevealed={inV}
@@ -557,7 +615,7 @@ export default function SectionStrengths() {
               />
               <KeyDot
                 item={keys[3]}
-                posClass="top-[230px] right-[90px]"
+                posClass="top-[230px] right-[150px]"
                 tooltipSide="left"
                 onClick={() => go("provide")}
                 isRevealed={inV}
@@ -565,7 +623,7 @@ export default function SectionStrengths() {
               />
               <KeyDot
                 item={keys[4]}
-                posClass="bottom-[30px] right-[200px]"
+                posClass="bottom-[10px] right-[280px]"
                 tooltipSide="left"
                 onClick={() => go("provide")}
                 isRevealed={inV}
@@ -573,7 +631,7 @@ export default function SectionStrengths() {
               />
               <KeyDot
                 item={keys[5]}
-                posClass="bottom-[30px] left-[200px]"
+                posClass="bottom-[10px] left-[280px]"
                 tooltipSide="right"
                 onClick={() => go("provide")}
                 isRevealed={inV}
@@ -582,7 +640,9 @@ export default function SectionStrengths() {
             </div>
           </div>
 
-          <div className={`strength-stage hidden md:block ${view === "trust" ? "is-show" : "is-hide"}`}>
+          <div
+            className={`strength-stage hidden md:block ${view === "trust" ? "is-show" : "is-hide"}`}
+          >
             {view === "trust" && (
               <div className="flex justify-center mb-8">
                 <span className="st-bdg inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/5 px-5 py-2 text-sm font-medium text-emerald-300 backdrop-blur-sm">
@@ -591,25 +651,46 @@ export default function SectionStrengths() {
                 </span>
               </div>
             )}
-            <div className="relative mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-2" key={`t${vk}`}>
+            <div
+              className="relative mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-2"
+              key={`t${vk}`}
+            >
               <div className="space-y-4">
                 {trustC.map((it, i) => (
-                  <EC key={it.id} item={it} dir="left" dl={i * 140} on={view === "trust"} />
+                  <EC
+                    key={it.id}
+                    item={it}
+                    dir="left"
+                    dl={i * 140}
+                    on={view === "trust"}
+                  />
                 ))}
               </div>
-              <div className={`relative flex flex-col items-center gap-5 ${view === "trust" ? "st-cbr" : ""}`}>
+              <div
+                className={`relative flex flex-col items-center gap-5 ${view === "trust" ? "st-cbr" : ""}`}
+              >
                 <img
                   src={cubeImg}
                   alt="Cube"
                   className="w-[320px] select-none"
                   draggable={false}
-                  style={{ filter: "drop-shadow(0 0 24px rgba(56,224,208,.25))" }}
+                  style={{
+                    filter: "drop-shadow(0 0 24px rgba(56,224,208,.25))",
+                  }}
                 />
                 <div className="flex items-center gap-3">
-                  <button className="st-ip" onClick={() => go("center")} type="button">
+                  <button
+                    className="st-ip"
+                    onClick={() => go("center")}
+                    type="button"
+                  >
                     <span className="a ab">‹</span> Overview
                   </button>
-                  <button className="st-ip" onClick={() => go("provide")} type="button">
+                  <button
+                    className="st-ip"
+                    onClick={() => go("provide")}
+                    type="button"
+                  >
                     Provide To <span className="a af">›</span>
                   </button>
                 </div>
@@ -617,7 +698,9 @@ export default function SectionStrengths() {
             </div>
           </div>
 
-          <div className={`strength-stage hidden md:block ${view === "provide" ? "is-show" : "is-hide"}`}>
+          <div
+            className={`strength-stage hidden md:block ${view === "provide" ? "is-show" : "is-hide"}`}
+          >
             {view === "provide" && (
               <div className="flex justify-center mb-8">
                 <span className="st-bdg inline-flex items-center gap-2 rounded-full border border-sky-400/20 bg-sky-400/5 px-5 py-2 text-sm font-medium text-sky-300 backdrop-blur-sm">
@@ -626,27 +709,48 @@ export default function SectionStrengths() {
                 </span>
               </div>
             )}
-            <div className="relative mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-2" key={`p${vk}`}>
-              <div className={`relative flex flex-col items-center gap-5 ${view === "provide" ? "st-cbl" : ""}`}>
+            <div
+              className="relative mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-2"
+              key={`p${vk}`}
+            >
+              <div
+                className={`relative flex flex-col items-center gap-5 ${view === "provide" ? "st-cbl" : ""}`}
+              >
                 <img
                   src={cubeImg}
                   alt="Cube"
                   className="w-[320px] select-none"
                   draggable={false}
-                  style={{ filter: "drop-shadow(0 0 24px rgba(56,224,208,.25))" }}
+                  style={{
+                    filter: "drop-shadow(0 0 24px rgba(56,224,208,.25))",
+                  }}
                 />
                 <div className="flex items-center gap-3">
-                  <button className="st-ip" onClick={() => go("trust")} type="button">
+                  <button
+                    className="st-ip"
+                    onClick={() => go("trust")}
+                    type="button"
+                  >
                     <span className="a ab">‹</span> Trust By
                   </button>
-                  <button className="st-ip" onClick={() => go("center")} type="button">
+                  <button
+                    className="st-ip"
+                    onClick={() => go("center")}
+                    type="button"
+                  >
                     Overview <span className="a af">›</span>
                   </button>
                 </div>
               </div>
               <div className="space-y-4">
                 {provC.map((it, i) => (
-                  <EC key={it.id} item={it} dir="right" dl={i * 140} on={view === "provide"} />
+                  <EC
+                    key={it.id}
+                    item={it}
+                    dir="right"
+                    dl={i * 140}
+                    on={view === "provide"}
+                  />
                 ))}
               </div>
             </div>

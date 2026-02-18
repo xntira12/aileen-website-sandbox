@@ -490,7 +490,7 @@ button:focus-visible {
   backdrop-filter: blur(10px);
   transition: transform 220ms ease, background 220ms ease, border-color 220ms ease;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
   
 }
 .strength-pill:hover {
@@ -501,7 +501,7 @@ button:focus-visible {
 }
 .strength-pill__arrow {
   opacity: 0.9;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 1;
 }
 
@@ -543,13 +543,13 @@ button:focus-visible {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 360px;
-  padding: 20px 30px;
+  width: 280px;
+  padding: 15px 20px;
   border-radius: 14px;
   background: rgba(255,255,255,0.10);
   border: 1px solid rgba(255,255,255,0.14);
   color: rgba(255,255,255,0.78);
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.35;
   backdrop-filter: blur(12px);
   opacity: 0;
