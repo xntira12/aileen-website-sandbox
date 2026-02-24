@@ -8,6 +8,8 @@ import SectionStrengths from "../components/SectionStrengths";
 import SectionServiceAndSolutions from "../components/SectionServiceAndSolutions";
 import SectionContactFooter from "../components/SectionContactFooter";
 import CustomersMarquee from "../components/CustomersMarquee";
+import SectionLeaderVision from "../components/Sectionleadervision";
+import SectionTeam from "../components/SectionTeam";
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -161,6 +163,10 @@ export default function Home() {
         <CustomersMarquee />
       </section>
 
+       <section id="leaderVision" className="py-0 bg-white">
+        <SectionLeaderVision />
+      </section>
+
       <section className="py-0 bg-slate-50">
         <SectionDataOrbit />
       </section>
@@ -171,6 +177,10 @@ export default function Home() {
 
       <section className="py-0 bg-slate-50">
         <SectionServiceAndSolutions />
+      </section>
+
+      <section className="py-0 bg-slate-50">
+        <SectionTeam />
       </section>
 
       <section id="contact" className="">
