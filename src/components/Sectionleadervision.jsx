@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import executivePhoto from "../assets/img/profile/executive.png"; // ← เปลี่ยน path ตามจริง
+import executivePhoto from "../assets/img/profile/member5.png"; // ← เปลี่ยน path ตามจริง
 
 /* ── Intersection Observer ── */
 function useInView(threshold = 0.1) {
