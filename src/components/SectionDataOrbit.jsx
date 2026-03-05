@@ -88,7 +88,7 @@ export default function SectionDataOrbit() {
       ([e]) => {
         if (e.isIntersecting) setInView(true);
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -136,12 +136,30 @@ export default function SectionDataOrbit() {
 
   // ✅ mobile sub-list (show only on mobile, after description)
   const mobileItems = [
-    { tone: "text-blue-700 bg-blue-50 ring-blue-200", title: "Software Development" },
-    { tone: "text-emerald-700 bg-emerald-50 ring-emerald-200", title: "AI & Intelligent Automation" },
-    { tone: "text-blue-700 bg-blue-50 ring-blue-200", title: "Systems Integration" },
-    { tone: "text-slate-700 bg-slate-50 ring-slate-200", title: "Low-Code Platforms" },
-    { tone: "text-emerald-700 bg-emerald-50 ring-emerald-200", title: "Enterprise Platforms" },
-    { tone: "text-slate-700 bg-slate-50 ring-slate-200", title: "Business Process & Workflows" },
+    {
+      tone: "text-blue-700 bg-blue-50 ring-blue-200",
+      title: "Software Development",
+    },
+    {
+      tone: "text-emerald-700 bg-emerald-50 ring-emerald-200",
+      title: "AI & Intelligent Automation",
+    },
+    {
+      tone: "text-blue-700 bg-blue-50 ring-blue-200",
+      title: "Systems Integration",
+    },
+    {
+      tone: "text-slate-700 bg-slate-50 ring-slate-200",
+      title: "Low-Code Platforms",
+    },
+    {
+      tone: "text-emerald-700 bg-emerald-50 ring-emerald-200",
+      title: "Enterprise Platforms",
+    },
+    {
+      tone: "text-slate-700 bg-slate-50 ring-slate-200",
+      title: "Business Process & Workflows",
+    },
   ];
 
   return (
@@ -306,7 +324,7 @@ export default function SectionDataOrbit() {
             style={{ animationDelay: "300ms" }}
           >
             <span className="h-2 w-2 rounded-full bg-cyan-600" />
-            ABOUT US
+            WHAT WE DO ?
           </span>
 
           <h3
@@ -323,10 +341,11 @@ export default function SectionDataOrbit() {
             className={`mt-4 max-w-xl text-sm leading-relaxed text-slate-600 md:text-base orb-sr ${inView ? "on" : ""}`}
             style={{ animationDelay: "700ms" }}
           >
-            เราส่งมอบโซลูชันซอฟต์แวร์ที่เชื่อถือได้ บริการที่ไว้วางใจ
-            และการให้คำปรึกษาจากทีมมากประสบการณ์ ตั้งแต่ด้านกระบวนการและคุณภาพ
-            ไปจนถึงระบบอัตโนมัติและ AI —
-            เสริมศักยภาพประสิทธิภาพและการเติบโตของธุรกิจ
+            เราส่งมอบโซลูชั่นซอฟต์แวร์ที่เชื่อถือได้ บริการที่วางใจได้
+            และการให้คำปรึกษาจากทีมมากประสบการณ์
+            ครอบคลุมตั้งแต่การบริหารจัดการกระบวนการและคุณภาพ ไปจนถึงการทำ
+            Automation และ Ai ที่เสริมศักยภาพ
+            สู่การเติบโตอย่างมีประสิทธิภาพและยั่งยืนของอค์กร
           </p>
 
           {/* ✅ Mobile only: list BELOW the description */}

@@ -61,7 +61,7 @@ export default function Navbar() {
   </li>
   <li>
     <a className={` ${menuText} ${menuHover}`} href="#strengths">
-        จุดแข็งของเรา
+        ข่าวสารและกิจกรรม
     </a>
   </li>
 </ul>

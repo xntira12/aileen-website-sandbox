@@ -115,7 +115,7 @@ export default function CustomersMarquee() {
           </span>
           </div>
         <h2 className="text-center text-3xl font-bold text-slate-600">
-         ได้รับความไว้วางใจจากลูกค้าระดับองค์กรชั้นนำ
+         ได้รับความไว้วางใจจากองค์กรชั้นน
         </h2>
       </div>
     
