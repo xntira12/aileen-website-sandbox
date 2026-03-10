@@ -53,7 +53,7 @@ const TABS = [
   { key: "support", label: "Project & Support",     chip: "Project & Support" },
 ];
 
-const CARD_W = 218; // 200px card + 18px gap
+const CARD_W = 178; // card width + gap (mobile-friendlier)
 
 function useInView(threshold = 0.08) {
   const ref = useRef(null);
@@ -77,60 +77,56 @@ function injectCSS() {
   const s = document.createElement("style");
   s.id = CSS_ID;
   s.textContent = `
-    @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800&display=swap');
-
-    .t9 { font-family:'Sarabun',sans-serif; background:#f8fafc; position:relative; overflow:hidden; }
+    
+    .t9 {  background:#f8fafc; position:relative; overflow:hidden; }
     .t9-blob { position:absolute; border-radius:50%; filter:blur(60px); pointer-events:none; z-index:0; }
     .t9-blob-tl { top:-60px; left:-80px; width:320px; height:320px; background:rgba(167,243,208,.18); }
     .t9-blob-br { bottom:-60px; right:-80px; width:320px; height:320px; background:rgba(191,219,254,.20); }
 
     .t9-pill { display:inline-flex; align-items:center; gap:8px; padding:7px 18px; border-radius:9999px; border:1px solid #cbd5e1; background:rgba(255,255,255,.7); font-size:.7rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:#475569; backdrop-filter:blur(8px); }
     .t9-hdot { width:7px; height:7px; border-radius:50%; background:#06b6d4; box-shadow:0 0 6px rgba(6,182,212,.6); }
-    .t9-h2   { font-size:clamp(1.7rem,3vw,2.1rem); font-weight:800; letter-spacing:-.03em; color:#0f172a; line-height:1.25; margin:14px 0 0; }
-    .t9-grad { background:linear-gradient(90deg,#2563eb,#10b981); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .t9-h2   { font-size:clamp(1.4rem,4vw,2.1rem); font-weight:800; letter-spacing:-.03em; color:#0f172a; line-height:1.25; margin:14px 0 0; }
+    .t9-grad { background:linear-gradient(90deg,#0499a5, #2d65a2);  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 
-    .t9-ctrl-wrap { display:flex; justify-content:center; align-items:center; margin-top:28px; }
-    .t9-tabs { display:inline-flex; gap:4px; padding:5px; background:#fff; border:1px solid #e2e8f0; border-radius:14px; box-shadow:0 1px 6px rgba(15,23,42,.05); flex-wrap:wrap; }
-    .t9-tab  { display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:10px; font-size:.78rem; font-weight:600; color:#64748b; border:none; background:none; cursor:pointer; transition:all .2s; white-space:nowrap; font-family:'Sarabun',sans-serif; }
+    /* ── TABS ── */
+    .t9-ctrl-wrap { display:flex; justify-content:center; align-items:center; margin-top:28px; padding:0 12px; }
+    .t9-tabs { display:inline-flex; gap:4px; padding:5px; background:#fff; border:1px solid #e2e8f0; border-radius:14px; box-shadow:0 1px 6px rgba(15,23,42,.05); flex-wrap:wrap; justify-content:center; }
+    .t9-tab  { display:inline-flex; align-items:center; gap:5px; padding:7px 12px; border-radius:10px; font-size:.72rem; font-weight:600; color:#64748b; border:none; background:none; cursor:pointer; transition:all .2s; white-space:nowrap; }
     .t9-tab:hover:not(.on) { background:#f1f5f9; color:#1e293b; }
     .t9-tab.on { color:#fff; background:linear-gradient(135deg,#3b82f6,#10b981); box-shadow:0 3px 12px rgba(59,130,246,.28); }
-    .t9-cnt  { display:inline-flex; align-items:center; justify-content:center; min-width:20px; height:20px; padding:0 6px; border-radius:9999px; font-size:.62rem; font-weight:700; }
+    .t9-cnt  { display:inline-flex; align-items:center; justify-content:center; min-width:18px; height:18px; padding:0 5px; border-radius:9999px; font-size:.6rem; font-weight:700; }
 
     /* ── MARQUEE (all tab) ── */
     .t9-marquee-wrap {
       position: relative;
-      overflow: hidden;           /* clips the scrolling strip */
+      overflow: hidden;
       margin: 28px 0 0;
       padding: 8px 0 24px;
     }
-    /* fade edges */
     .t9-marquee-wrap::before,
     .t9-marquee-wrap::after {
       content: '';
       position: absolute;
       top: 0; bottom: 0;
-      width: 80px;
+      width: 60px;
       z-index: 2;
       pointer-events: none;
     }
     .t9-marquee-wrap::before { left:0;  background:linear-gradient(to right,#f8fafc,transparent); }
     .t9-marquee-wrap::after  { right:0; background:linear-gradient(to left, #f8fafc,transparent); }
 
-    /* the moving strip — two identical copies side by side */
     .t9-marquee-track {
       display: flex;
       width: max-content;
-      animation: t9scroll 55s linear infinite;
+      animation: t9scroll 50s linear infinite;
     }
-    /* pause on hover anywhere inside the wrap */
     .t9-marquee-wrap:hover .t9-marquee-track { animation-play-state: paused; }
 
-    /* one copy of the list */
     .t9-marquee-list {
       display: flex;
       flex-shrink: 0;
-      gap: 18px;
-      padding: 0 9px; /* half-gap on each side so joins are even */
+      gap: 14px;
+      padding: 0 7px;
     }
 
     @keyframes t9scroll {
@@ -138,7 +134,7 @@ function injectCSS() {
       to   { transform: translateX(-50%); }
     }
 
-    /* ── NORMAL SCROLL (filtered tabs) ── */
+    /* ── FILTERED TABS: manual scroll (desktop) ── */
     .t9-viewport-wrap {
       position: relative;
       overflow: hidden;
@@ -146,7 +142,7 @@ function injectCSS() {
     }
     .t9-viewport-wrap::before,
     .t9-viewport-wrap::after {
-      content: ''; position: absolute; top: 0; bottom: 8px; width: 80px; z-index: 2; pointer-events: none;
+      content: ''; position: absolute; top: 0; bottom: 8px; width: 60px; z-index: 2; pointer-events: none;
     }
     .t9-viewport-wrap::before { left:0;  background:linear-gradient(to right,#f8fafc,transparent); }
     .t9-viewport-wrap::after  { right:0; background:linear-gradient(to left, #f8fafc,transparent); }
@@ -161,24 +157,63 @@ function injectCSS() {
     }
     .t9-track.dragging { cursor: grabbing; user-select: none; }
     .t9-track::-webkit-scrollbar { display: none; }
-    .t9-inner { display: flex; flex-wrap: nowrap; gap: 18px; width: max-content; padding: 0 80px; }
+    .t9-inner { display: flex; flex-wrap: nowrap; gap: 14px; width: max-content; padding: 0 60px; }
 
-    /* card */
-    .t9-card { flex: 0 0 200px; cursor: default; }
-    .t9-box  { width:100%; height:250px; border-radius:16px; overflow:hidden; background:linear-gradient(160deg,#e2e8f0,#cdd5e0); position:relative; box-shadow:0 2px 10px rgba(15,23,42,.07); transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s; display:flex; align-items:center; justify-content:center; }
-    .t9-card:hover .t9-box { transform:translateY(-8px) scale(1.025); box-shadow:0 20px 44px rgba(59,130,246,.17),0 6px 16px rgba(15,23,42,.07); }
+    /* ── MOBILE GRID (filtered tabs only) ── */
+    @media (max-width: 639px) {
+      .t9-viewport-wrap {
+        overflow: visible;
+        margin: 20px 0 0;
+      }
+      .t9-viewport-wrap::before,
+      .t9-viewport-wrap::after { display: none; }
+
+      .t9-track {
+        overflow: visible;
+        cursor: default;
+        padding: 4px 0 16px;
+      }
+      .t9-track.dragging { cursor: default; }
+
+      .t9-inner {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        width: 100%;
+        padding: 0 16px;
+      }
+
+      .t9-card { flex: none; width: 100%; }
+
+      .t9-box { height: 200px; border-radius: 14px; }
+
+      /* hide bottom nav on mobile grid */
+      .t9-bottom-nav { display: none; }
+    }
+
+    /* ── CARD ── */
+    .t9-card { flex: 0 0 160px; cursor: default; }
+    .t9-box  { width:100%; height:220px; border-radius:16px; overflow:hidden; background:linear-gradient(160deg,#e2e8f0,#cdd5e0); position:relative; box-shadow:0 2px 10px rgba(15,23,42,.07); transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s; display:flex; align-items:center; justify-content:center; }
+    .t9-card:hover .t9-box { transform:translateY(-6px) scale(1.02); box-shadow:0 16px 36px rgba(59,130,246,.17),0 4px 12px rgba(15,23,42,.07); }
     .t9-wash { position:absolute; inset:0; background:linear-gradient(150deg,rgba(59,130,246,.12),rgba(16,185,129,.15)); opacity:0; transition:opacity .35s; pointer-events:none; z-index:1; }
     .t9-card:hover .t9-wash { opacity:1; }
-    .t9-img  { width:100%; height:100%; object-fit:cover; object-position:center; display:block; position:absolute; inset:0; }
-    .t9-avatar { width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:2.4rem; font-weight:700; color:#94a3b8; }
-    .t9-chip { position:absolute; bottom:10px; left:10px; z-index:2; padding:4px 10px; border-radius:9999px; font-size:.55rem; font-weight:700; letter-spacing:.05em; background:linear-gradient(135deg,#3b82f6,#10b981); color:#fff; box-shadow:0 2px 8px rgba(16,185,129,.28); transition:transform .3s; white-space:nowrap; }
-    .t9-card:hover .t9-chip { transform:scale(1.07); }
-    .t9-meta { padding:10px 2px 0; text-align:center; }
-    .t9-name { font-size:.88rem; font-weight:700; color:#0f172a; line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; transition:color .25s; }
-    .t9-card:hover .t9-name { background:linear-gradient(90deg,#2563eb,#10b981); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-    .t9-role { margin-top:3px; font-size:.7rem; color:#64748b; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .t9-img  { width:100%; height:100%; object-fit:cover; object-position:center top; display:block; position:absolute; inset:0; }
+    .t9-avatar { width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:2rem; font-weight:700; color:#94a3b8; }
+    .t9-chip { position:absolute; bottom:8px; left:8px; right:8px; z-index:2; padding:4px 8px; border-radius:9999px; font-size:.5rem; font-weight:700; letter-spacing:.04em; background:linear-gradient(135deg,#3b82f6,#10b981); color:#fff; box-shadow:0 2px 8px rgba(16,185,129,.28); transition:transform .3s; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-align:center; }
+    .t9-card:hover .t9-chip { transform:scale(1.04); }
 
-    /* bottom nav */
+    /* ── META: role only, no name ── */
+    .t9-meta { padding:8px 2px 0; text-align:center; }
+    .t9-role { font-size:.75rem; font-weight:700; color:#1e293b; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; transition:color .25s; line-height:1.4; }
+    .t9-card:hover .t9-role { background:linear-gradient(90deg,#0499a5, #2d65a2); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+    /* Mobile role: allow wrap */
+    @media (max-width: 639px) {
+      .t9-role { font-size:.72rem; white-space:normal; line-height:1.3; }
+      .t9-chip { font-size:.48rem; }
+    }
+
+    /* ── BOTTOM NAV ── */
     .t9-bottom-nav { display:flex; align-items:center; justify-content:center; gap:12px; margin-top:4px; padding-bottom:48px; min-height:60px; }
     .t9-btn { width:40px; height:40px; border-radius:50%; border:1px solid #e2e8f0; background:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 1px 6px rgba(15,23,42,.06); transition:all .22s; color:#64748b; }
     .t9-btn:hover:not(:disabled) { border-color:rgba(59,130,246,.4); background:#eff6ff; color:#1d4ed8; }
@@ -188,12 +223,20 @@ function injectCSS() {
     .t9-dot-item { width:6px; height:6px; border-radius:50%; background:#cbd5e1; transition:all .3s; }
     .t9-dot-item.on { width:20px; border-radius:9999px; background:linear-gradient(90deg,#3b82f6,#10b981); }
 
+    /* ── ANIMATIONS ── */
     @keyframes t9Up   { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none} }
     .t9-rv { opacity:0; }
     .t9-rv.on { animation:t9Up .65s cubic-bezier(.22,1,.36,1) forwards; }
     @keyframes t9Card { from{opacity:0;transform:translateY(14px) scale(.97)} to{opacity:1;transform:none} }
     .t9-card { opacity:0; }
     .t9-card.on { animation:t9Card .5s cubic-bezier(.22,1,.36,1) forwards; }
+
+    /* marquee card: smaller on mobile */
+    @media (max-width: 639px) {
+      .t9-marquee-list { gap: 10px; }
+      .t9-marquee-list .t9-card { flex: 0 0 130px; }
+      .t9-marquee-list .t9-box  { height: 170px; }
+    }
   `;
   document.head.appendChild(s);
 }
@@ -222,19 +265,20 @@ const Icons = {
   ),
 };
 
+// Card shows role only — no name displayed
 function Card({ member, chip, delay, inView }) {
   const init = member.name.split(" ").filter(Boolean).map((w) => w[0]).join("").slice(0, 2).toUpperCase();
   return (
     <div className={`t9-card ${inView ? "on" : ""}`} style={{ animationDelay: `${delay}ms` }}>
       <div className="t9-box">
         {member.photo
-          ? <img src={member.photo} alt={member.name} className="t9-img" />
+          ? <img src={member.photo} alt={member.role} className="t9-img" />
           : <div className="t9-avatar">{init}</div>}
         <div className="t9-wash" />
-        <span className="t9-chip">{chip}</span>
+        {/* <span className="t9-chip">{chip}</span> */}
       </div>
       <div className="t9-meta">
-        <div className="t9-name">{member.name}</div>
+        {/* Name removed — role only */}
         <div className="t9-role">{member.role}</div>
       </div>
     </div>
@@ -248,9 +292,18 @@ export default function SectionTeam() {
   const [canL, setCanL] = useState(false);
   const [canR, setCanR] = useState(false);
   const [activeDot, setActiveDot] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const dragRef = useRef({ dragging: false, startX: 0, scrollLeft: 0 });
 
   useEffect(() => { injectCSS(); }, []);
+
+  // Detect mobile
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const isAll    = tab === "all";
   const filtered = isAll ? TEAM : TEAM.filter((m) => m.dept === tab);
@@ -258,7 +311,7 @@ export default function SectionTeam() {
   const dotCount = Math.max(1, Math.ceil(filtered.length / 2));
 
   const syncNav = () => {
-    if (isAll) return;
+    if (isAll || isMobile) return;
     const el = trackRef.current;
     if (!el) return;
     const sl = el.scrollLeft;
@@ -285,7 +338,7 @@ export default function SectionTeam() {
     trackRef.current?.scrollBy({ left: dir * CARD_W * 2, behavior: "smooth" });
 
   useEffect(() => {
-    if (isAll) return;
+    if (isAll || isMobile) return;
     const el = trackRef.current;
     if (!el) return;
     const check = () => setCanR(el.scrollWidth > el.clientWidth + 8);
@@ -293,16 +346,17 @@ export default function SectionTeam() {
     const ro = new ResizeObserver(check);
     ro.observe(el);
     return () => ro.disconnect();
-  }, [tab, inView, isAll]);
+  }, [tab, inView, isAll, isMobile]);
 
   const onMouseDown = (e) => {
+    if (isMobile) return;
     const el = trackRef.current;
     if (!el) return;
     dragRef.current = { dragging: true, startX: e.pageX - el.offsetLeft, scrollLeft: el.scrollLeft };
     el.classList.add("dragging");
   };
   const onMouseMove = (e) => {
-    if (!dragRef.current.dragging) return;
+    if (!dragRef.current.dragging || isMobile) return;
     e.preventDefault();
     const el = trackRef.current;
     if (!el) return;
@@ -329,7 +383,7 @@ export default function SectionTeam() {
       </div>
 
       {/* tabs */}
-      <div style={{ position: "relative", zIndex: 1, maxWidth: 1152, margin: "0 auto", padding: "0 24px" }}>
+      <div style={{ position: "relative", zIndex: 1, maxWidth: 1152, margin: "0 auto", padding: "0 12px" }}>
         <div className={`t9-ctrl-wrap t9-rv ${inView ? "on" : ""}`} style={{ animationDelay: "160ms" }}>
           <div className="t9-tabs">
             {TABS.map((t) => {
@@ -353,7 +407,6 @@ export default function SectionTeam() {
       {isAll && (
         <div style={{ position: "relative", zIndex: 1 }}>
           <div className="t9-marquee-wrap">
-            {/* Two identical lists — CSS animates the combined strip by -50% */}
             <div className="t9-marquee-track">
               {[0, 1].map((copy) => (
                 <div key={copy} className="t9-marquee-list">
@@ -370,14 +423,13 @@ export default function SectionTeam() {
               ))}
             </div>
           </div>
-          {/* spacer where nav would be */}
           <div style={{ height: 52 }} />
         </div>
       )}
 
-      {/* ── FILTERED TABS: manual scroll ── */}
+      {/* ── FILTERED TABS ── */}
       {!isAll && (
-        <div style={{ position: "relative", zIndex: 1, maxWidth: 1152, margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ position: "relative", zIndex: 1, maxWidth: 1152, margin: "0 auto", padding: "0 0" }}>
           <div className="t9-viewport-wrap">
             <div
               ref={trackRef}
@@ -402,6 +454,7 @@ export default function SectionTeam() {
             </div>
           </div>
 
+          {/* bottom nav — hidden on mobile via CSS */}
           <div className="t9-bottom-nav">
             <button className="t9-btn" disabled={!canL} onClick={() => scroll(-1)} aria-label="Previous">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">

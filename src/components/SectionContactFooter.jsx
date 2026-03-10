@@ -515,8 +515,10 @@ export default function SectionContactDark() {
                 className="ct5-chip"
                 style={{ marginTop: 8, fontSize: ".78rem" }}
               >
-                <span style={{ color: "rgba(255,255,255,.35)" }}>📍</span>
-                <span>Bangkok, Thailand</span>
+               
+                <span>79 อาคารเจียมจรรย์ ชั้น 3 ห้อง 312
+ถนนสุขสวัสดิ์ แขวงราษฎร์บูรณะ เขตราษฎร์บูรณะ
+กรุงเทพมหานคร 10140</span>
               </a>
             </div>
           </div>

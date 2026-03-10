@@ -50,7 +50,7 @@ export default function Navbar() {
     </a>
   </li>
   <li>
-    <a className={` ${menuText} ${menuHover}`} href="#services">
+    <a className={` ${menuText} ${menuHover}`} href="#service">
       บริการของเรา
     </a>
   </li>
@@ -60,7 +60,7 @@ export default function Navbar() {
     </a>
   </li>
   <li>
-    <a className={` ${menuText} ${menuHover}`} href="#strengths">
+    <a className={` ${menuText} ${menuHover}`} href="#news">
         ข่าวสารและกิจกรรม
     </a>
   </li>
@@ -109,9 +109,9 @@ export default function Navbar() {
               </a>
               <a
                 className="block font-semibold text-slate-900"
-                href="#strengths"
+                href="#news"
               >
-                OUR STRENGTHS
+                NEWS
               </a>
 
               <div className="pt-2">

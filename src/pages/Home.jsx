@@ -305,7 +305,7 @@ export default function Home() {
       <main className="mx-auto max-w-6xl px-6"></main>
       <section id="customers" className="py-0 bg-white"><CustomersMarquee /></section> 
          <section className="py-0 bg-slate-50"><SectionDataOrbit /></section>
-      <section className="py-0 bg-slate-50"><SectionServiceAndSolutions /></section>
+      <section id="service" className="py-0 bg-slate-50"><SectionServiceAndSolutions /></section>
       <section id="leaderVision" className="py-0 bg-white"><SectionLeaderVision /></section>
    
       <section id="strengths" className="py-0"><SectionStrengths /></section>

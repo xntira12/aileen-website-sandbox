@@ -29,48 +29,62 @@ function injectCSS() {
   const s = document.createElement("style");
   s.id = STYLE_ID;
   s.textContent = `
-   
+ 
 
     .lv8 {
-    
+
       background: #ffffff;
       position: relative;
       overflow: hidden;
     }
 
-    /* ── Header ── */
+    /* ── Header (matches SectionTeam style) ── */
     .lv8-header {
       text-align: center;
       padding: 52px 24px 40px;
       position: relative; z-index: 1;
     }
-    .lv8-eyebrow {
-      display: inline-flex; align-items: center; gap: 10px;
-      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.22em;
-      text-transform: uppercase; color: #94a3b8;
+
+    /* Pill badge — same as t9-pill */
+    .lv8-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 18px; border-radius: 9999px;
+      border: 1px solid #cbd5e1;
+      background: rgba(255,255,255,.7);
+      font-size: .7rem; font-weight: 600;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: #475569; backdrop-filter: blur(8px);
       margin-bottom: 14px;
     }
-    .lv8-eyebrow-line {
-      width: 28px; height: 1px;
-      background: linear-gradient(90deg, #3b82f6, #10b981);
+    .lv8-hdot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #06b6d4;
+      box-shadow: 0 0 6px rgba(6,182,212,.6);
+      flex-shrink: 0;
     }
-    .lv8-title {
- 
-      font-size: clamp(1.5rem, 3vw, 2.1rem);
-      font-weight: 900; color: #0f172a;
-      line-height: 1.2; letter-spacing: -0.02em;
-      margin: 0;
+
+    /* H2 — same as t9-h2 */
+    .lv8-h2 {
+      font-size: clamp(1.4rem, 4vw, 2.1rem);
+      font-weight: 800; letter-spacing: -.03em;
+      color: #0f172a; line-height: 1.25;
+      margin: 0 0 10px;
     }
-    .lv8-title em {
-      font-style: italic;
-      background: linear-gradient(110deg, #2563eb 0%, #059669 100%);
+    .lv8-grad {
+      background: linear-gradient(90deg, #0b639b, #62e5da); 
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
+
     .lv8-subtitle {
-      margin-top: 10px; font-size: 0.88rem; font-weight: 300;
-      color: #64748b; max-width: 420px; margin-left: auto; margin-right: auto;
-      line-height: 1.75;
+      font-size: 0.88rem; font-weight: 300;
+      color: #64748b; max-width: 480px;
+      margin: 0 auto; line-height: 1.75;
     }
+
+    /* ── Reveal animation (same as t9-rv) ── */
+    @keyframes lv8Up { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none} }
+    .lv8-rv { opacity: 0; }
+    .lv8-rv.on { animation: lv8Up .65s cubic-bezier(.22,1,.36,1) forwards; }
 
     /* ── Leader rows ── */
     .lv8-leaders {
@@ -79,7 +93,6 @@ function injectCSS() {
       padding: 0 24px 64px;
     }
 
-    /* each row */
     .lv8-row {
       display: grid;
       grid-template-columns: 320px 1fr;
@@ -95,23 +108,38 @@ function injectCSS() {
     .lv8-row-reverse {
       grid-template-columns: 1fr 320px;
     }
+
+    /* ── Mobile layout ── */
     @media (max-width: 768px) {
-      .lv8-row { grid-template-columns: 1fr; min-height: auto; }
-      .lv8-row-reverse .lv8-photo-panel { order: -1; }
+      .lv8-row {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .lv8-row-reverse .lv8-photo-panel {
+        order: -1;
+      }
+      .lv8-photo-panel {
+        height: 320px;
+        min-height: 320px;
+      }
+      .lv8-content-panel {
+        padding: 32px 24px;
+      }
+      .lv8-quote {
+        font-size: 1.2rem !important;
+      }
     }
 
     /* ── Photo panel ── */
     .lv8-photo-panel {
-      position: relative; overflow: hidden;
-      background: #fff;
+      position: relative;
+      overflow: hidden;
+      background: #e2e8f0;
     }
-    /* wrapper that holds only the image + its overlay */
     .lv8-photo-inner {
-      position: absolute; top: 0; left: 0;
+      position: absolute;
+      top: 0; left: 0;
       width: 100%; height: 100%;
-    }
-    .lv8-row-reverse .lv8-photo-inner {
-      left: auto; right: 0;
     }
     .lv8-photo-panel img {
       width: 100%; height: 100%;
@@ -126,29 +154,19 @@ function injectCSS() {
       position: absolute; inset: 0;
       background: linear-gradient(to top, rgba(15,23,42,0.75) 0%, rgba(15,23,42,0.05) 40%, transparent 100%);
     }
-    .lv8-num {
-      position: absolute; top: 18px; left: 20px;
-   
-      font-size: 3rem; font-weight: 900; line-height: 1;
-      color: rgba(255,255,255,0.12);
-      user-select: none; pointer-events: none;
-      letter-spacing: -0.04em;
-    }
-    .lv8-row-reverse .lv8-num { left: auto; right: 20px; }
     .lv8-nameplate {
       position: absolute; bottom: 0; left: 0; right: 0;
       padding: 44px 20px 25px;
       background: linear-gradient(to top, rgba(15,23,42,0.88) 0%, transparent 100%);
     }
     .lv8-person-name {
-
       font-size: 1.1rem; font-weight: 700; color: #fff;
       letter-spacing: -0.01em; line-height: 1.2;
     }
     .lv8-person-role {
       margin-top: 3px; font-size: 0.6rem; font-weight: 600;
       letter-spacing: 0.14em; text-transform: uppercase;
-      background: linear-gradient(90deg, #60a5fa, #34d399);
+      background: linear-gradient(90deg, #0499a5, #2d65a2);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
     .lv8-person-co {
@@ -162,12 +180,10 @@ function injectCSS() {
       padding: 60px 60px;
       position: relative; overflow: hidden;
     }
-    .lv8-tags { display: flex; flex-wrap: wrap; gap: 6px; }
     .lv8-content-panel::before {
       content: '';
       position: absolute; bottom: -32px; right: -32px;
       width: 140px; height: 140px; border-radius: 50%;
-      
       pointer-events: none;
     }
     .lv8-row-reverse .lv8-content-panel::before {
@@ -176,9 +192,8 @@ function injectCSS() {
 
     .lv8-accent-bar {
       width: 3px; height: 36px; border-radius: 2px;
-      background: linear-gradient(to bottom, #3b82f6, #10b981);
-      margin-bottom: 16px;
-      flex-shrink: 0;
+      background: linear-gradient(to bottom, #0499a5, #2d65a2);
+      margin-bottom: 16px; flex-shrink: 0;
     }
     .lv8-role-label {
       font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em;
@@ -186,20 +201,17 @@ function injectCSS() {
       margin-bottom: 12px;
     }
     .lv8-openquote {
-    
       font-size: 3.5rem; line-height: 0.6;
-      color: #e2e8f0;
-      display: block; margin-bottom: 6px;
+      color: #e2e8f0; display: block; margin-bottom: 6px;
       user-select: none;
     }
     .lv8-quote {
       font-size: 1.5rem; font-weight: 700; font-style: italic;
-      color: #1e293b; line-height: 1.6;
-      margin: 0 0 16px;
+      color: #1e293b; line-height: 1.6; margin: 0 0 16px;
     }
     .lv8-quote mark {
       background: none;
-      background: linear-gradient(110deg, #2563eb, #059669);
+      background: linear-gradient(110deg, #0499a5, #2d65a2);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
       font-style: normal;
     }
@@ -222,7 +234,6 @@ function injectCSS() {
     .lv8-tag-v { background: #f5f3ff; color: #5b21b6; border-color: #ddd6fe; }
     .lv8-tag-a { background: #fffbeb; color: #92400e; border-color: #fde68a; }
 
-    @keyframes lv8Up { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }
     @keyframes lv8L  { from{opacity:0;transform:translateX(-28px)} to{opacity:1;transform:none} }
     @keyframes lv8R  { from{opacity:0;transform:translateX(28px)}  to{opacity:1;transform:none} }
     @keyframes lv8Sc { from{opacity:0;transform:scale(.97)}        to{opacity:1;transform:none} }
@@ -232,9 +243,7 @@ function injectCSS() {
 
 export default function SectionLeaderVision() {
   const [secRef, inView] = useInView(0.06);
-  useEffect(() => {
-    injectCSS();
-  }, []);
+  useEffect(() => { injectCSS(); }, []);
 
   const anim = (kf, delay) => ({
     opacity: inView ? 1 : 0,
@@ -244,45 +253,40 @@ export default function SectionLeaderVision() {
   });
 
   return (
-    <section ref={secRef} className="lv8 pb-20">
-      {/* Header */}
-      <div className="lv8-header" style={anim("lv8Up", 0)}>
-        <div className="lv8-eyebrow">
-          <span className="lv8-eyebrow-line" />
+    <section ref={secRef} className="lv8 pb-20 pt-20">
+
+      {/* ── Header (same pattern as SectionTeam) ── */}
+      <div className="lv8-header">
+        <span className={`lv8-pill lv8-rv ${inView ? "on" : ""}`} style={{ animationDelay: "0ms" }}>
+          <span className="lv8-hdot" />
           VISION &amp; LEADERSHIP
-          <span className="lv8-eyebrow-line" />
-        </div>
-        {/* <h2 className="lv8-title">
-          พันธมิตรที่คุณวางใจ
-          <br />
-          <em>ในทุกขั้นตอนของการเติบโต</em>
-        </h2> */}
-        <p className="lv8-subtitle">
+        </span>
+        <h2 className={`lv8-h2 lv8-rv ${inView ? "on" : ""}`} style={{ animationDelay: "80ms" }}>
+          ผู้นำของเรา — <span className="lv8-grad">วิสัยทัศน์ที่ขับเคลื่อนองค์กร</span>
+        </h2>
+        <p className={`lv8-subtitle lv8-rv ${inView ? "on" : ""}`} style={{ animationDelay: "160ms" }}>
           ผู้นำที่มีวิสัยทัศน์ พร้อมขับเคลื่อนองค์กรของคุณสู่อนาคต ด้วยความเชี่ยวชาญและความมุ่งมั่น
-          
         </p>
       </div>
 
-      {/* Leaders */}
+      {/* ── Leader rows ── */}
       <div className="lv8-leaders">
+
         {/* Row 1: Photo LEFT, Content RIGHT */}
-        <div className="lv8-row" style={anim("lv8Sc", 120)}>
+        <div className="lv8-row" style={anim("lv8Sc", 220)}>
           <div className="lv8-photo-panel">
             <div className="lv8-photo-inner">
               <img src={executivePhoto1} alt="Pramote T." />
               <div className="lv8-photo-overlay" />
-            
               <div className="lv8-nameplate">
                 <div className="lv8-person-name">Pramote.T</div>
-                <div className="lv8-person-role">
-                  Professional Services Director
-                </div>
+                <div className="lv8-person-role">Professional Services Director</div>
                 <div className="lv8-person-co">Aileen Solutions Co., Ltd.</div>
               </div>
             </div>
           </div>
 
-          <div className="lv8-content-panel" style={anim("lv8R", 280)}>
+          <div className="lv8-content-panel" style={anim("lv8R", 360)}>
             <div className="lv8-accent-bar" />
             <div className="lv8-role-label">Professional Services</div>
             <span className="lv8-openquote">&ldquo;</span>
@@ -295,7 +299,7 @@ export default function SectionLeaderVision() {
               ด้วยบริการตั้งแต่ให้คำปรึกษา ออกแบบ พัฒนา อบรม และดูแลต่อเนื่อง
               เพื่อให้เทคโนโลยีถูกนำไปใช้งานได้จริง และสร้างคุณค่าให้กับองค์กร
               เพราะเราเชื่อว่า <strong>Sustainable Growth</strong>{" "}
-              เกิดขึ้นได้จากกระบวนการ ทำงานที่แข็งแกร่ง
+              เกิดขึ้นได้จากกระบวนการทำงานที่แข็งแกร่ง
               และเทคโนโลยีที่ออกแบบให้เหมาะกับบริบทของแต่ละองค์กร
             </p>
             <div className="lv8-tags">
@@ -308,8 +312,8 @@ export default function SectionLeaderVision() {
         </div>
 
         {/* Row 2: Content LEFT, Photo RIGHT */}
-        <div className="lv8-row lv8-row-reverse" style={anim("lv8Sc", 200)}>
-          <div className="lv8-content-panel" style={anim("lv8L", 360)}>
+        <div className="lv8-row lv8-row-reverse" style={anim("lv8Sc", 300)}>
+          <div className="lv8-content-panel" style={anim("lv8L", 440)}>
             <div className="lv8-accent-bar" />
             <div className="lv8-role-label">Sales &amp; Management</div>
             <span className="lv8-openquote">&ldquo;</span>
@@ -320,8 +324,8 @@ export default function SectionLeaderVision() {
             </p>
             <p className="lv8-body">
               เราเชื่อว่า ความสำเร็จที่ยั่งยืนเริ่มต้นจากการมีเป้าหมายเดียวกัน
-              เรามุ่งมั่นในการสร้างวัฒนธรรมการทำงาน ที่มีสื่อสารชัดเจน เป็นระบบ
-              และร่วมงานกันด้วยความเคารพในบทบาทหน้าที่ของทุกๆคน
+              เรามุ่งมั่นในการสร้างวัฒนธรรมการทำงานที่มีการสื่อสารชัดเจน เป็นระบบ
+              และร่วมงานกันด้วยความเคารพในบทบาทหน้าที่ของทุกๆ คน
               เมื่อทุกคนก้าวไปในทิศทางเดียวกัน องค์กรจะเติบโตได้อย่างมั่นคง
               และสามารถ<strong>ส่งมอบคุณค่าให้ลูกค้าได้อย่างแท้จริง</strong>
               เพราะการเติบโตที่ยั่งยืน คือการเติบโตไปพร้อมกันของทั้งองค์กร
@@ -334,21 +338,19 @@ export default function SectionLeaderVision() {
             </div>
           </div>
 
-          <div className="lv8-photo-panel" style={anim("lv8R", 440)}>
+          <div className="lv8-photo-panel" style={anim("lv8R", 520)}>
             <div className="lv8-photo-inner">
               <img src={executivePhoto2} alt="Surinna T." />
               <div className="lv8-photo-overlay" />
-           
               <div className="lv8-nameplate">
                 <div className="lv8-person-name">Surinna.T</div>
-                <div className="lv8-person-role">
-                  Managing Director 
-                </div>
+                <div className="lv8-person-role">Managing Director</div>
                 <div className="lv8-person-co">Aileen Solutions Co., Ltd.</div>
               </div>
             </div>
           </div>
         </div>
+
       </div>
     </section>
   );
