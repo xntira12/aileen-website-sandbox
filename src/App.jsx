@@ -2,7 +2,7 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Contact from "./pages/Contact.jsx";
 import AboutUs from "./pages/AboutUs";
-import ComingSoon from "./pages/ComingSoon";
+import ComingSoon from "./pages/Comingsoon";
 
 export default function App() {
   return (
