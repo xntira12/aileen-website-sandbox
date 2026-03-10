@@ -182,7 +182,7 @@ function injectCSS() {
 .ab-pill-d {
   display:inline-flex; align-items:center; gap:7px; padding:5px 14px; border-radius:9999px;
   border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.05);
-  font-size:.68rem; font-weight:700; letter-spacing:.13em; color:rgba(255,255,255,.7);
+  font-size:.68rem; font-weight:400; letter-spacing:.13em; color:rgba(255,255,255,.7);
 }
 .ab-vcard {
   background:rgba(255,255,255,.04); backdrop-filter:blur(12px);
@@ -459,8 +459,6 @@ export default function AboutUs() {
             <div className={`ab-vcard r-sc ${qv?"on":""}`}
               style={{ animationDelay:"140ms", marginTop:32, maxWidth:760, width:"100%" }}>
 
-              {/* decorative quote — hidden on mobile */}
-              <div className="ab-vquote-deco">"</div>
 
               <p className="ab-vtext">
                 เราเชื่อว่าความเชี่ยวชาญที่แท้จริง ไม่ได้อยู่ที่เครื่องมือ<br/>
@@ -481,13 +479,13 @@ export default function AboutUs() {
             </div>
 
             {/* tags */}
-            <div className={`r-up ${qv?"on":""}`}
+            {/* <div className={`r-up ${qv?"on":""}`}
               style={{ animationDelay:"300ms", display:"flex", flexWrap:"wrap",
                 justifyContent:"center", gap:10, marginTop:36 }}>
               {["มีโครงสร้าง","โปร่งใส","ตรวจสอบได้","พัฒนาต่อเนื่อง","ยั่งยืน"].map(t => (
                 <span key={t} className="ab-tag">{t}</span>
               ))}
-            </div>
+            </div> */}
 
           </div>
         </div>
