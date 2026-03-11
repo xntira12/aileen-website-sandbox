@@ -573,13 +573,13 @@ export default function SectionServices() {
             SERVICES &amp; SOLUTIONS
           </span>
           <h2 style={{ marginTop: 20, fontSize: "clamp(1.6rem,4vw,2.5rem)", fontWeight: 800, letterSpacing: "-.02em", color: "white", lineHeight: 1.15 }}>
-            โซลูชันครบวงจรเพื่อ{" "}
+            โซลูชี่นครบวงจรเพื่อ{" "}
             <span style={{ background: "linear-gradient(to right,#7dd3fc,#6ee7b7)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
               ธุรกิจยุคใหม่
             </span>
           </h2>
           <p style={{ marginTop: 16, maxWidth: 580, marginLeft: "auto", marginRight: "auto", fontSize: "clamp(.88rem,1vw,1rem)", lineHeight: 1.75, color: "rgba(255,255,255,.78)" }}>
-            โซลูชันที่ออกแบบมาเพื่อเปลี่ยนกระบวนการทำงานให้ชาญฉลาดยิ่งขึ้น ด้วย AI และ Automation ที่ตอบโจทย์ทุกความต้องการทางธุรกิจ
+            โซลูชั่นที่ออกแบบมาเพื่อเปลี่ยนกระบวนการทำงานให้ชาญฉลาดยิ่งขึ้น ด้วย AI และ Automation ที่ตอบโจทย์ทุกความต้องการทางธุรกิจ
           </p>
         </div>
 

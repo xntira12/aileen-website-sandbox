@@ -165,7 +165,7 @@ export default function SectionStrengths() {
             <span className="bg-gradient-to-r from-sky-300 to-emerald-300 bg-clip-text text-transparent">Aileen Solutions</span>
           </h2>
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/70 md:text-base">
-            6 Keys to Value — เราเชื่อมั่นในสิ่งที่ทำ และมุ่งส่งมอบคุณค่าให้กับองค์กร ผ่านโซลูชัน แพลตฟอร์ม บริการ และการให้คำปรึกษาที่เชื่อถือได้
+            6 Keys to Value — เราเชื่อมั่นในสิ่งที่ทำ และมุ่งส่งมอบคุณค่าให้กับองค์กร ผ่านโซลูชั่น แพลตฟอร์ม บริการ และการให้คำปรึกษาที่เชื่อถือได้
           </p>
         </div>
 

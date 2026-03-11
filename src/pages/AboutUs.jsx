@@ -383,7 +383,7 @@ export default function AboutUs() {
                   alignItems:"center", justifyContent:"flex-end" }}>
                 {[
                   { v:"2561", l:"ปีที่ก่อตั้ง" },
-                  { v:"7+",   l:"โซลูชันหลัก" },
+                  { v:"7+",   l:"โซลูชั่นหลัก" },
                   { v:"10+",  l:"องค์กรที่ไว้วางใจ" },
                 ].map((st,i) => (
                   <div key={st.l} className="ab-stat-min"
@@ -418,7 +418,7 @@ export default function AboutUs() {
                 style={{ animationDelay:"80ms", marginTop:14,
                   fontSize:"clamp(1.6rem,3vw,2.1rem)", fontWeight:800,
                   color:"#0f172a", letterSpacing:"-.02em", lineHeight:1.2 }}>
-                โซลูชันที่เชื่อมโยง<span className="gb">กระบวนการ ข้อมูล และเทคโนโลยี</span>
+                โซลูชั่นที่เชื่อมโยง<span className="gb">กระบวนการ ข้อมูล และเทคโนโลยี</span>
               </h2>
               <p className={`r-up ${tv?"on":""}`}
                 style={{ animationDelay:"150ms", marginTop:10, fontSize:".88rem",
@@ -430,7 +430,7 @@ export default function AboutUs() {
               style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:16 }}>
               {[
                 { ic:"🔗", t:"กลยุทธ์ → กระบวนการ → ดิจิทัล",
-                  b:"เราออกแบบโซลูชันที่เชื่อมโยง กลยุทธ์องค์กร เข้ากับ กระบวนการทำงาน และ ระบบดิจิทัล เพื่อให้องค์กรดำเนินงานได้อย่างมีโครงสร้าง โปร่งใส ตรวจสอบได้ และพัฒนาต่อเนื่อง" },
+                  b:"เราออกแบบโซลูชั่นที่เชื่อมโยง กลยุทธ์องค์กร เข้ากับ กระบวนการทำงาน และ ระบบดิจิทัล เพื่อให้องค์กรดำเนินงานได้อย่างมีโครงสร้าง โปร่งใส ตรวจสอบได้ และพัฒนาต่อเนื่อง" },
                 { ic:"⚙️", t:"Process ก่อน Technology",
                   b:"เราให้ความสำคัญกับความถูกต้องของกระบวนการก่อนการเลือกใช้เทคโนโลยี เพราะเทคโนโลยีที่ดีต้องตั้งอยู่บนโครงสร้างที่ชัดเจน มีลำดับขั้นตอน และเข้าใจบทบาทหน้าที่อย่างแท้จริง" },
                 { ic:"🚀", t:"Digital Transformation ที่แท้จริง",

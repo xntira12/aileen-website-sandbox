@@ -101,7 +101,7 @@ export default function Contact() {
                   name="project_type"
                   options={[
                     "สอบถามทั่วไป",
-                    "โซลูชันและบริการ",
+                    "โซลูชั่นและบริการ",
                     "ผลิตภัณฑ์ซอฟต์แวร์",
                     "อื่น ๆ",
                   ]}
