@@ -206,21 +206,21 @@ export default function Home() {
 
       {/* HERO */}
       <section className="relative w-full min-h-screen overflow-hidden bg-black">
-        <div className="absolute inset-0 z-0 overflow-hidden scale-110">
+        <div className="absolute inset-0 z-0 overflow-hidden">
           <iframe
-            className="absolute top-1/2 left-1/2 min-w-full min-h-full max-w-none -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+            className="absolute top-1/2 left-1/2  min-w-full min-h-full max-w-none -translate-x-1/2 -translate-y-1/2 pointer-events-none"
             src="https://www.youtube.com/embed/_YTLAnkz9Q4?autoplay=1&mute=1&controls=0&loop=1&playlist=_YTLAnkz9Q4&playsinline=1&rel=0&modestbranding=1"
             title="YouTube video background"
             frameBorder="0"
-            allow="autoplay; encrypted-media; picture-in-picture"
+            allow="autoplay; encrypted-media"
             allowFullScreen
           />
         </div>
 
-        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-black/20 via-black/10 to-black/25" />
+        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-black/30 via-black/20 to-black/25" />
 
         <div
-          className="relative z-10 flex min-h-screen flex-col items-center px-6 pt-20 pb-10"
+          className="relative z-10 flex min-h-screen flex-col items-center px-6 pb-10"
           style={{
             opacity: isLoaded ? 1 : 0,
             transition: "opacity 0.8s ease 0.1s",
