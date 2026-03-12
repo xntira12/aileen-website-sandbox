@@ -6,7 +6,7 @@ import SectionDataOrbit from "../components/SectionDataOrbit";
 import SectionStrengths from "../components/SectionStrengths";
 import SectionServiceAndSolutions from "../components/SectionServices";
 import SectionContactFooter from "../components/SectionContactFooter";
-import CustomersMarquee from "../components/CustomersMarquee";
+// import CustomersMarquee from "../components/CustomersMarquee";
 import SectionLeaderVision from "../components/Sectionleadervision";
 import SectionTeam from "../components/SectionTeam";
 
@@ -271,8 +271,8 @@ export default function Home() {
       `}</style>
 
       <main className="mx-auto max-w-6xl px-6"></main>
-      <section id="customers" className="py-0 bg-white"><CustomersMarquee /></section>
-      <section className="py-0 bg-slate-50"><SectionDataOrbit /></section>
+      {/* <section id="customers" className="py-0 bg-white"><CustomersMarquee /></section> */}
+      <section className="py-0 "><SectionDataOrbit /></section>
       <section id="service" className="py-0 bg-slate-50"><SectionServiceAndSolutions /></section>
       <section id="leaderVision" className="py-0 bg-white"><SectionLeaderVision /></section>
       <section id="strengths" className="py-0"><SectionStrengths /></section>
