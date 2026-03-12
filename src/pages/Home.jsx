@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import logo from "../assets/img/logo/aileen-logo.png";
 import sloganImg from "../assets/img/home/slogan.png";
 import SectionDataOrbit from "../components/SectionDataOrbit";
-import SectionStrengths from "../components/SectionStrengths";
+// import SectionStrengths from "../components/SectionStrengths";
 import SectionServiceAndSolutions from "../components/SectionServices";
 import SectionContactFooter from "../components/SectionContactFooter";
 // import CustomersMarquee from "../components/CustomersMarquee";
@@ -275,7 +275,7 @@ export default function Home() {
       <section className="py-0 "><SectionDataOrbit /></section>
       <section id="service" className="py-0 bg-slate-50"><SectionServiceAndSolutions /></section>
       <section id="leaderVision" className="py-0 bg-white"><SectionLeaderVision /></section>
-      <section id="strengths" className="py-0"><SectionStrengths /></section>
+      {/* <section id="strengths" className="py-0"><SectionStrengths /></section> */}
       <section className="py-0 bg-slate-50"><SectionTeam /></section>
       <section id="contact" className=""><SectionContactFooter /></section>
     </div>
