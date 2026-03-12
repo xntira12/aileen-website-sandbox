@@ -36,7 +36,7 @@ function injectCSS() {
 .r-fd { opacity:0 } .r-fd.on { animation:abFd 1s   ease                      forwards }
 .r-sc { opacity:0 } .r-sc.on { animation:abSc .65s cubic-bezier(.22,1,.36,1) forwards }
 
-.gc  { background:linear-gradient(90deg,#0499a5,#2d65a2);
+.gc  { background:linear-gradient(90deg,#0499a5,#a8f4ed);
        -webkit-background-clip:text;-webkit-text-fill-color:transparent; }
 .gb  { background:linear-gradient(90deg,#0499a5,#2d65a2);
        -webkit-background-clip:text;-webkit-text-fill-color:transparent; }
@@ -76,7 +76,7 @@ function injectCSS() {
 .ab-uline { width:0; height:2px; border-radius:2px; background:linear-gradient(to right,#0499a5,#2d65a2); margin:20px 0 22px; }
 .ab-uline.on { animation:abLn .7s cubic-bezier(.22,1,.36,1) .4s forwards; }
 .ab-sub  { font-size:clamp(.9rem,1.15vw,1rem); font-weight:400; color:rgba(255,255,255,.55); line-height:1.8; margin:0 0 28px; }
-.ab-chip { display:inline-flex; align-items:center; gap:8px; padding:9px 18px; border-radius:50px; background:rgba(34,211,238,.07); border:1px solid rgba(34,211,238,.2); font-size:.8rem; font-weight:500; color:rgba(34,211,238,.9); width:fit-content; letter-spacing:.01em; }
+.ab-chip { display:inline-flex; align-items:center; gap:8px; padding:9px 18px; border-radius:50px; background:rgba(34,211,238,.07); border:1px solid rgb(139 228 224); font-size:.8rem; font-weight:500; color:rgb(108 211 211); width:fit-content; letter-spacing:.01em; }
 
 /* ════════ S2 WHITE ════════ */
 .ab-s2 { background:#f8fafc; padding:72px 0 80px; position:relative; }
@@ -98,189 +98,170 @@ function injectCSS() {
 .ab-wcard:hover::before { opacity:1; }
 .ab-wic { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; margin-bottom:14px; background:linear-gradient(135deg,rgba(34,211,238,.1),rgba(52,211,153,.07)); border:1px solid rgba(34,211,238,.15); }
 
-/* ── Org Roadmap Timeline ── */
-@keyframes rmDot   { from{transform:scale(0);opacity:0} to{transform:scale(1);opacity:1} }
-@keyframes rmLine  { from{width:0} to{width:100%} }
-@keyframes rmPulse { 0%,100%{box-shadow:0 0 0 0 rgba(4,153,165,0)} 60%{box-shadow:0 0 0 7px rgba(4,153,165,.13)} }
+/* ── Focus Pillars Diagram ── */
+@keyframes pillarGlow { 0%,100%{box-shadow:0 0 0 0 rgba(4,153,165,0)} 60%{box-shadow:0 0 0 10px rgba(4,153,165,.12)} }
+@keyframes aiFloat   { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
 
 .ab-diagram-wrap {
   margin-top: 64px;
-  padding: 52px 48px 44px;
-  background: #f8fafc;
-  border-radius: 20px;
+  padding: 56px 48px 48px;
+
+  border-radius: 24px;
   border: 1px solid #e8eef4;
   position: relative; overflow: hidden;
 }
-/* faint teal glow top-right */
 .ab-diagram-wrap::after {
-  content:''; position:absolute; top:-60px; right:-60px;
-  width:280px; height:280px; border-radius:50%; pointer-events:none;
+  content:''; position:absolute; bottom:-80px; right:-80px;
+  width:320px; height:320px; border-radius:50%; pointer-events:none;
   background:radial-gradient(circle,rgba(4,153,165,.07),transparent 65%);
 }
 
+/* eyebrow */
 .ab-rm-eyebrow {
-  display:flex; flex-direction:column; align-items:center; gap:8px; margin-bottom:44px;
+  display:flex; flex-direction:column; align-items:center; gap:8px; margin-bottom:48px;
 }
 .ab-rm-pill {
-  display:inline-flex; align-items:center; gap:6px;
-  padding:4px 14px; border-radius:9999px;
-  border:1px solid rgba(8,145,178,.22);
-  font-size:.64rem; font-weight:600; letter-spacing:.14em;
-  color:#0e7490; text-transform:uppercase;
+  display:inline-flex; align-items:center; gap:6px; padding:5px 14px;
+  border-radius:9999px; border:1px solid rgba(8,145,178,.26);
+  font-size:.68rem; font-weight:400; letter-spacing:.13em; color:#0e7490; text-transform:uppercase;
 }
-.ab-rm-dot { width:5px;height:5px;border-radius:50%;background:#0499a5;flex-shrink:0; }
+.ab-rm-dot { width:6px;height:6px;border-radius:50%;background:#0891b2;flex-shrink:0; }
 .ab-rm-title {
-  font-size:clamp(1rem,1.7vw,1.2rem); font-weight:800; color:#0f172a;
-  letter-spacing:-.02em; text-align:center; line-height:1.3; margin:0;
+  font-size:clamp(1.6rem,3vw,2.1rem); font-weight:800; color:#0f172a;
+  letter-spacing:-.02em; text-align:center; line-height:1.2; margin:0;
 }
-.ab-rm-sub {
-  font-size:.8rem; color:#94a3b8; text-align:center; margin:0; line-height:1.6;
+.ab-rm-sub { font-size:.88rem; color:#64748b; text-align:center; margin:0; line-height:1.7; max-width:400px; }
+
+/* ── new layout: left stack + right AI hero ── */
+.ab-pillar-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: stretch;
 }
 
-/* ── timeline track ── */
-.ab-rm-track {
-  position:relative;
-  display:grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
+/* left col: two stacked rows */
+.ab-pillar-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-/* horizontal spine line */
-.ab-rm-track::before {
-  content:'';
-  position:absolute;
-  top: 22px; left: 12.5%; right: 12.5%;
-  height: 1px;
-  background: linear-gradient(to right,
-    #e2e8f0 0%,
-    rgba(4,153,165,.4) 33%,
-    rgba(4,153,165,.6) 60%,
-    rgba(4,153,165,.3) 80%,
-    #e2e8f0 100%
-  );
+/* small supporting card */
+.ab-pillar-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 22px;
+  background: #fff;
+  border: 1px solid #e8eef4;
+  border-radius: 16px;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+  cursor: default;
+  flex: 1;
 }
-
-/* each milestone */
-.ab-rm-step {
-  display:flex; flex-direction:column; align-items:center;
-  padding: 0 12px;
-  position:relative;
+.ab-pillar-row:hover {
+  border-color: rgba(4,153,165,.22);
+  box-shadow: 0 4px 18px rgba(4,153,165,.06);
+  transform: translateY(-2px);
 }
-
-/* dot on timeline */
-.ab-rm-step-dot {
-  width:44px; height:44px; border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  position:relative; z-index:2; flex-shrink:0;
-  margin-bottom:20px;
-  background:#fff;
-  border:1.5px solid #e2e8f0;
-  transition: border-color .22s, box-shadow .22s, transform .22s;
-  cursor:default;
+.ab-pillar-row-icon {
+  width: 40px; height: 40px; border-radius: 11px; flex-shrink:0;
+  background: linear-gradient(135deg,rgba(34,211,238,.1),rgba(52,211,153,.06));
+  border: 1px solid rgba(34,211,238,.18);
+  display: flex; align-items: center; justify-content: center;
 }
-.ab-rm-step:hover .ab-rm-step-dot {
-  border-color:rgba(4,153,165,.4);
-  box-shadow:0 4px 16px rgba(4,153,165,.1);
-  transform:translateY(-2px);
+.ab-pillar-row-body {}
+.ab-pillar-row-num {
+  font-size: .78rem; font-weight:400; letter-spacing:.1em;
+  color: #089aa5; text-transform:uppercase; display:block; margin-bottom:14px;
 }
-/* active / future AI dot */
-.ab-rm-step-dot.is-current {
-  background: linear-gradient(135deg,#0499a5,#2d65a2);
-  border:none;
-  box-shadow:0 4px 20px rgba(4,153,165,.32);
-  animation: rmPulse 2.6s ease-in-out infinite;
+.ab-pillar-row-title {
+  font-size: 1rem; font-weight:800; color:#0f172a;
+  line-height:1.3; display:block; margin-bottom:5px;
 }
-.ab-rm-step-dot.is-future {
-  background:#fff;
-  border:1.5px dashed rgba(4,153,165,.5);
+.ab-pillar-row-desc {
+  font-size: .90rem; color:#64748b; line-height:1.65; display:block;
 }
-
-/* year badge above dot */
-.ab-rm-year {
-  position:absolute; top:-22px;
-  font-size:.6rem; font-weight:800; letter-spacing:.08em;
-  color:#94a3b8;
-}
-.ab-rm-step-dot.is-current ~ .ab-rm-year,
-.ab-rm-step.active .ab-rm-year { color:#0499a5; }
-
-/* card below dot */
-.ab-rm-card {
-  background:#fff;
-  border:1px solid #e8eef4;
-  border-radius:14px;
-  padding:18px 16px 16px;
-  width:100%;
-  text-align:center;
-  transition:border-color .22s, box-shadow .22s, transform .22s;
-  cursor:default;
-  position:relative;
-}
-.ab-rm-step:hover .ab-rm-card {
-  border-color:rgba(4,153,165,.25);
-  box-shadow:0 6px 22px rgba(4,153,165,.07);
-  transform:translateY(-2px);
-}
-.ab-rm-step.active .ab-rm-card {
-  border-color:rgba(4,153,165,.3);
-  background: linear-gradient(135deg,#f0fdfe,#f8fafc);
-}
-.ab-rm-step.future .ab-rm-card {
-  border-style:dashed;
-  border-color:rgba(4,153,165,.25);
-  background:rgba(240,253,254,.4);
-}
-
-.ab-rm-card-label {
-  font-size:.6rem; font-weight:700; letter-spacing:.1em;
-  text-transform:uppercase; color:#94a3b8; display:block; margin-bottom:6px;
-}
-.ab-rm-step.active .ab-rm-card-label { color:#0499a5; }
-.ab-rm-step.future .ab-rm-card-label { color:rgba(4,153,165,.7); }
-
-.ab-rm-card-title {
-  font-size:.82rem; font-weight:800; color:#0f172a;
-  line-height:1.35; display:block; margin-bottom:6px;
-}
-.ab-rm-card-desc {
-  font-size:.72rem; color:#64748b; line-height:1.65; display:block;
-}
-.ab-rm-step.future .ab-rm-card-title { color:#0499a5; }
-
-/* AI badge on future card */
-.ab-rm-ai-badge {
+.ab-pillar-row-tag {
   display:inline-flex; align-items:center; gap:5px;
   margin-top:10px; padding:3px 10px; border-radius:9999px;
-  background:linear-gradient(90deg,rgba(4,153,165,.1),rgba(45,101,162,.08));
-  border:1px solid rgba(4,153,165,.2);
-  font-size:.6rem; font-weight:700; color:#0499a5; letter-spacing:.04em;
+  background:rgba(4,153,165,.05); border:1px solid rgba(4,153,165,.12);
+  font-size:.6rem; font-weight:600; color:#0891b2; letter-spacing:.04em;
+}
+
+/* right: AI hero card — tall */
+.ab-pillar-ai {
+  background: linear-gradient(145deg,#0499a5,#2056a0);
+  border-radius: 20px;
+  padding: 36px 28px 32px;
+  display: flex; flex-direction:column; align-items:flex-start;
+  justify-content: space-between;
+  position:relative; overflow:hidden;
+  cursor:default;
+  box-shadow: 0 16px 48px rgba(4,153,165,.22);
+}
+/* decorative circles */
+.ab-pillar-ai::before {
+  content:''; position:absolute; top:-40px; right:-40px;
+  width:180px; height:180px; border-radius:50%;
+  background:rgba(255,255,255,.06); pointer-events:none;
+}
+.ab-pillar-ai::after {
+  content:''; position:absolute; bottom:-60px; left:-30px;
+  width:220px; height:220px; border-radius:50%;
+  background:rgba(255,255,255,.04); pointer-events:none;
+}
+
+.ab-pillar-ai-num {
+  font-size:.76rem; font-weight:400; letter-spacing:.14em;
+  color:rgba(255, 255, 255, 0.5); text-transform:uppercase; display:block; margin-bottom:24px;
+}
+/* big AI icon */
+.ab-pillar-ai-icon {
+  width:64px; height:64px; border-radius:18px;
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.2);
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:20px;
+  animation: aiFloat 3.2s ease-in-out infinite;
+}
+.ab-pillar-ai-phase {
+  font-size:.65rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:rgba(255,255,255,.6); display:block; margin-bottom:8px;
+}
+.ab-pillar-ai-title {
+  font-size:clamp(1.1rem,1.8vw,1.3rem); font-weight:800; color:#fff;
+  line-height:1.3; display:block; margin-bottom:10px;
+}
+.ab-pillar-ai-desc {
+  font-size:.88rem; color:rgba(255,255,255,.75); line-height:1.75; display:block; flex:1;
+}
+.ab-pillar-ai-tag {
+  display:inline-flex; align-items:center; gap:6px;
+  margin-top:22px; padding:6px 14px; border-radius:9999px;
+  background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.25);
+  font-size:.65rem; font-weight:700; color:#fff; letter-spacing:.04em;
 }
 
 /* bottom note */
 .ab-rm-footnote {
-  margin-top:36px; padding-top:24px;
-  border-top:1px solid #f1f5f9;
-  display:flex; align-items:center; justify-content:center; gap:8px;
+  margin-top:32px; padding-top:24px; border-top:1px solid rgba(4,153,165,.1);
+  display:flex; align-items:center; justify-content:center; gap:10px;
 }
 .ab-rm-fn-bar {
   width:20px; height:2px; border-radius:2px;
   background:linear-gradient(to right,#0499a5,#2d65a2); flex-shrink:0;
 }
-.ab-rm-fn-text {
-  font-size:.73rem; color:#94a3b8; line-height:1.6;
-}
-.ab-rm-fn-text strong { color:#0f172a; font-weight:700; }
+.ab-rm-fn-text { font-size:.93rem; color:#94a3b8; line-height:1.6; }
+.ab-rm-fn-text strong { color:#0f172a; font-weight:400; }
 
 @media(max-width:860px){
   .ab-diagram-wrap { padding:36px 24px 32px; }
-  .ab-rm-track {
-    grid-template-columns:1fr 1fr;
-    gap:20px;
-  }
-  .ab-rm-track::before { display:none; }
+  .ab-pillar-layout { grid-template-columns:1fr; }
 }
 @media(max-width:480px){
-  .ab-rm-track { grid-template-columns:1fr; }
+  .ab-pillar-ai { padding:28px 20px 24px; }
 }
 
 /* ════════ S4 WHITE — vision redesign ════════ */
@@ -467,7 +448,7 @@ export default function AboutUs() {
               <h1 className={`ab-h1 r-up ${hv?"on":""}`} style={{ animationDelay:"160ms" }}>
                 Digital<br/>
                 <span className="gc">Transformation</span><br/>
-                <span style={{ fontSize:"clamp(1.5rem,2.6vw,2.2rem)", color:"rgba(255,255,255,.6)", fontWeight:700 }}>ของประเทศไทย</span>
+                <span style={{ fontSize:"clamp(1.5rem,2.6vw,2.2rem)", color:"rgba(255, 255, 255, 0.66)", fontWeight:700 }}>ของประเทศไทย</span>
               </h1>
               <div className={`ab-uline ${hv?"on":""}`} />
               <p className={`ab-sub r-up ${hv?"on":""}`} style={{ animationDelay:"300ms" }}>
@@ -500,9 +481,9 @@ export default function AboutUs() {
                 </p>
               </div>
               <div className={`r-up ${sv?"on":""} ab-stats-row`} style={{ animationDelay:"160ms", display:"flex", gap:0, alignItems:"center", justifyContent:"flex-end" }}>
-                {[{ v:"2561", l:"ปีที่ก่อตั้ง" }, { v:"7+", l:"โซลูชั่นหลัก" }, { v:"10+", l:"องค์กรที่ไว้วางใจ" }].map((st,i) => (
+                {[{ v:"2561", l:"ปีที่ก่อตั้ง" }, { v:"10+", l:"โซลูชั่นหลัก" }, { v:"10+", l:"องค์กรที่ไว้วางใจ" },{ v:"50+", l:"โครงการระดับองค์กร" }].map((st,i) => (
                   <div key={st.l} className="ab-stat-min" style={{ paddingLeft:i===0?0:28, marginLeft:i===0?0:28, borderLeft:i===0?"none":"1px solid #e2e8f0" }}>
-                    <span style={{ fontSize:"clamp(1.6rem,3vw,2.1rem)", fontWeight:800, lineHeight:1, display:"block", background:"linear-gradient(120deg,#0b639b 30%,#62e5da)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>{st.v}</span>
+                    <span style={{ fontSize:"clamp(1.6rem,3vw,2.1rem)", fontWeight:800, lineHeight:1, display:"block", background:"linear-gradient(120deg,#0891b2 30%,#0891b2)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>{st.v}</span>
                     <span style={{ fontSize:".72rem", color:"#94a3b8", fontWeight:500, marginTop:5, display:"block", letterSpacing:".04em" }}>{st.l}</span>
                   </div>
                 ))}
@@ -537,91 +518,74 @@ export default function AboutUs() {
               ))}
             </div>
 
-            {/* ── Org Roadmap ── */}
+            {/* ── Current Focus Pillars ── */}
             <div className={`ab-diagram-wrap r-up ${tv?"on":""}`} style={{ animationDelay:"460ms" }}>
 
               <div className="ab-rm-eyebrow">
-                <div className="ab-rm-pill"><span className="ab-rm-dot"/>OUR JOURNEY</div>
+                <div className="ab-rm-pill"><span className="ab-rm-dot"/>OUR FOCUS</div>
                 <h3 className="ab-rm-title">
-                  เส้นทางการพัฒนาองค์กร — <span className="gc">สู่ยุคดิจิทัลที่ขับเคลื่อนด้วยข้อมูล</span>
+                  มุ่งพัฒนาระบบองค์กร — <span className="gb">ที่ทำงานร่วมกับ AI</span>
                 </h3>
-                <p className="ab-rm-sub">จากรากฐานที่มั่นคง สู่ระบบที่ทันสมัยและพร้อมรับอนาคต</p>
+               
               </div>
 
-              <div className="ab-rm-track">
+              <div className="ab-pillar-layout">
 
-                {/* ── Milestone 1 ── */}
-                <div className="ab-rm-step">
-                  <div style={{position:"relative",display:"flex",flexDirection:"column",alignItems:"center"}}>
-                    <span className="ab-rm-year" style={{top:"-22px",position:"absolute"}}>2561</span>
-                    <div className="ab-rm-step-dot">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{width:18,height:18}}>
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="ab-rm-card">
-                    <span className="ab-rm-card-label">ก่อตั้งบริษัท</span>
-                    <span className="ab-rm-card-title">วางรากฐาน<br/>ที่ปรึกษาองค์กร</span>
-                    <span className="ab-rm-card-desc">เริ่มต้นให้บริการที่ปรึกษาด้านกลยุทธ์และกระบวนการ สำหรับภาคอุตสาหกรรมและพลังงาน</span>
-                  </div>
-                </div>
+                {/* LEFT — two supporting rows */}
+                <div className="ab-pillar-stack">
 
-                {/* ── Milestone 2 ── */}
-                <div className="ab-rm-step">
-                  <div style={{position:"relative",display:"flex",flexDirection:"column",alignItems:"center"}}>
-                    <span className="ab-rm-year" style={{top:"-22px",position:"absolute"}}>2562–64</span>
-                    <div className="ab-rm-step-dot">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{width:18,height:18}}>
-                        <circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/>
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="ab-rm-card">
-                    <span className="ab-rm-card-label">พัฒนาโซลูชั่น</span>
-                    <span className="ab-rm-card-title">ออกแบบ Process<br/>และระบบปฏิบัติการ</span>
-                    <span className="ab-rm-card-desc">ขยายบริการสู่การออกแบบกระบวนการและระบบ ERP สำหรับสายการผลิต Manufacturing</span>
-                  </div>
-                </div>
-
-                {/* ── Milestone 3 — CURRENT ── */}
-                <div className="ab-rm-step active">
-                  <div style={{position:"relative",display:"flex",flexDirection:"column",alignItems:"center"}}>
-                    <span className="ab-rm-year" style={{top:"-22px",position:"absolute",color:"#0499a5",fontWeight:800}}>ปัจจุบัน</span>
-                    <div className="ab-rm-step-dot is-current">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.95)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{width:18,height:18}}>
-                        <rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 20h8M12 18v2"/>
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="ab-rm-card">
-                    <span className="ab-rm-card-label">Digital Platform</span>
-                    <span className="ab-rm-card-title">ระบบดิจิทัลครบวงจร<br/>เชื่อมทุกระดับองค์กร</span>
-                    <span className="ab-rm-card-desc">นำเสนอแพลตฟอร์มดิจิทัลที่เชื่อมโยงกลยุทธ์ กระบวนการ และข้อมูลแบบ Real-time</span>
-                  </div>
-                </div>
-
-                {/* ── Milestone 4 — FUTURE / AI ── */}
-                <div className="ab-rm-step future">
-                  <div style={{position:"relative",display:"flex",flexDirection:"column",alignItems:"center"}}>
-                    <span className="ab-rm-year" style={{top:"-22px",position:"absolute",color:"rgba(4,153,165,.7)"}}>อนาคต</span>
-                    <div className="ab-rm-step-dot is-future">
+                  <div className="ab-pillar-row">
+                    <div className="ab-pillar-row-icon">
                       <svg viewBox="0 0 24 24" fill="none" stroke="#0499a5" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{width:18,height:18}}>
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                      </svg>
+                    </div>
+                    <div className="ab-pillar-row-body">
+                      <span className="ab-pillar-row-num">01 — รากฐาน</span>
+                      <span className="ab-pillar-row-title">กลยุทธ์และกระบวนการที่ชัดเจน</span>
+                      <span className="ab-pillar-row-desc">วางโครงสร้างองค์กรและกระบวนการทำงานให้มั่นคงก่อน เพื่อให้ระบบที่จะตามมาทำงานได้อย่างมีประสิทธิภาพ</span>
+                      <span className="ab-pillar-row-tag">Process-First</span>
+                    </div>
+                  </div>
+
+                  <div className="ab-pillar-row">
+                    <div className="ab-pillar-row-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="#0499a5" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{width:18,height:18}}>
+                        <rect x="2" y="4" width="20" height="14" rx="2"/>
+                        <path d="M8 20h8M12 18v2"/>
+                      </svg>
+                    </div>
+                    <div className="ab-pillar-row-body">
+                      <span className="ab-pillar-row-num">02 — ระบบดิจิทัล</span>
+                      <span className="ab-pillar-row-title">Platform ที่เชื่อมทุกส่วนขององค์กร</span>
+                      <span className="ab-pillar-row-desc">ระบบดิจิทัลที่ยืดหยุ่นและขยายได้ เชื่อมโยงข้อมูลและการดำเนินงานทุกระดับแบบ Real-time</span>
+                      <span className="ab-pillar-row-tag">Digital Platform</span>
+                    </div>
+                  </div>
+
+                </div>
+
+                {/* RIGHT — AI hero card */}
+                <div className="ab-pillar-ai">
+                  <div>
+                    <span className="ab-pillar-ai-num">03 — จุดมุ่งหมาย</span>
+                    <div className="ab-pillar-ai-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.95)" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" style={{width:30,height:30}}>
                         <path d="M9.663 17h4.673M12 3v1m6.364 1.636-.707.707M21 12h-1M4 12H3m3.343-5.657-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
                       </svg>
                     </div>
+                    <span className="ab-pillar-ai-phase">AI &amp; Intelligence</span>
+                    <span className="ab-pillar-ai-title">AI ที่ทำงานร่วมกับระบบได้จริง</span>
+                    <span className="ab-pillar-ai-desc">นี่คือสิ่งที่เรามุ่งเน้น — บูรณาการ AI เข้ากับกระบวนการและระบบดิจิทัลขององค์กร ให้ทำงานร่วมกันได้อย่างเป็นธรรมชาติและสร้างคุณค่าได้จริง</span>
                   </div>
-                  <div className="ab-rm-card">
-                    <span className="ab-rm-card-label">Next Step</span>
-                    <span className="ab-rm-card-title">ระบบที่ขับเคลื่อน<br/>ด้วย AI</span>
-                    <span className="ab-rm-card-desc">บูรณาการ AI เข้ากับทุกกระบวนการ เพื่อการตัดสินใจที่ชาญฉลาดและพัฒนาได้ต่อเนื่อง</span>
-                    <span className="ab-rm-ai-badge">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{width:10,height:10}}>
-                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-                      </svg>
-                      AI-Enabled
-                    </span>
-                  </div>
+                  <span className="ab-pillar-ai-tag">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{width:11,height:11}}>
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                    </svg>
+                    AI-Integrated System
+                  </span>
                 </div>
 
               </div>
@@ -629,12 +593,12 @@ export default function AboutUs() {
               <div className="ab-rm-footnote">
                 <div className="ab-rm-fn-bar"/>
                 <p className="ab-rm-fn-text">
-                  <strong>ไอลีน โซลูชั่น</strong> มุ่งพัฒนาอย่างต่อเนื่อง — จากที่ปรึกษากระบวนการ สู่พาร์ทเนอร์ด้าน Digital &amp; AI Transformation
+                  <strong>ไอลีน โซลูชั่น</strong> มุ่งพัฒนาระบบและโซลูชันที่ผสาน AI เข้ากับกระบวนการทำงานขององค์กร เพื่อสร้างคุณค่าอย่างแท้จริงและรองรับการเติบโตในอนาคต
                 </p>
               </div>
 
             </div>
-            {/* ── end roadmap ── */}
+            {/* ── end focus pillars ── */}
 
           </div>
         </div>
@@ -651,7 +615,7 @@ export default function AboutUs() {
               <h2 className={`r-up ${qv?"on":""}`}
                 style={{ animationDelay:"80ms", marginTop:16, fontSize:"clamp(1.7rem,3vw,2.3rem)",
                   fontWeight:800, letterSpacing:"-.03em", color:"#0f172a", textAlign:"center", lineHeight:1.15 }}>
-                สิ่งที่เราเชื่อ และ<span className="gc"> สิ่งที่เราส่งมอบ</span>
+                สิ่งที่เราเชื่อ และ<span className="gb"> สิ่งที่เราส่งมอบ</span>
               </h2>
             </div>
 
@@ -667,7 +631,7 @@ export default function AboutUs() {
                   แต่อยู่ที่<strong>ความเข้าใจในระบบการทำงาน</strong>ขององค์กรทั้งภาพรวม<br/>
                   และความสามารถในการทำให้สิ่งที่ซับซ้อน<br/>
                   กลายเป็นระบบที่{" "}
-                  <span className="gc" style={{ fontWeight:800 }}>
+                  <span className="gb" style={{ fontWeight:800 }}>
                     ชัดเจน บริหารจัดการได้ และเติบโตได้อย่างยั่งยืน
                   </span>
                 </p>

@@ -75,7 +75,7 @@ function injectCSS() {
 .svs-flow-node{display:flex;flex-direction:column;align-items:center;position:relative;z-index:1}
 @keyframes svsNode{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:none}}
 .svs-flow-node-rv{opacity:0}.svs-flow-node-rv.on{animation:svsNode .45s cubic-bezier(.34,1.56,.64,1) forwards}
-.svs-flow-circle{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#ffffff,#0b8b93);display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:800;color:#154d66;position:relative;z-index:2;flex-shrink:0;box-shadow:0 0 0 4px rgba(56,224,208,.18),0 4px 20px rgba(56,224,208,.32)}
+.svs-flow-circle{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg, #073c4a, #0a3f4e);display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:800;color:#fff;position:relative;z-index:2;flex-shrink:0;box-shadow:0 0 0 4px rgba(56,224,208,.18),0 4px 20px rgba(56,224,208,.32)}
 .svs-flow-stem{width:2px;height:22px;background:linear-gradient(180deg,rgba(56,224,208,.7),rgba(56,224,208,.06));margin:0 auto}
 @keyframes svsStem{from{opacity:0;transform:scaleY(0)}to{opacity:1;transform:scaleY(1)}}
 .svs-flow-stem-rv{opacity:0;transform-origin:top}.svs-flow-stem-rv.on{animation:svsStem .35s ease forwards}

@@ -14,7 +14,7 @@ export default function Navbar() {
   }, []);
 
   const menuText = scrolled ? "text-slate-700" : "text-slate-200";
-  const menuHover = scrolled ? "hover:text-teal-700" : "hover:text-teal-400";
+  const menuHover = scrolled ? "hover:text-[#27b7a6]" : "hover:text-[#27b7a6]";
 
   const textColor = scrolled ? "text-slate-900" : "text-white";
   const navBg = scrolled

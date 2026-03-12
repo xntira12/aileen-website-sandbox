@@ -312,7 +312,7 @@ export default function SectionContactDark() {
 
               <div {...rv(540)} style={{ ...rv(540).style, marginTop: 32 }}>
                 <a
-                  href="/contact-form"
+                  href="#contact"
                   className="btn-fancy group relative inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/5 px-7 py-3 text-sm font-semibold text-white backdrop-blur transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-emerald-500/15"
                 >
                   <span className="relative z-10">Go to Contact Form</span>
@@ -462,13 +462,13 @@ export default function SectionContactDark() {
             {/* Col 2: Solutions */}
             <div className="ct5-solCol">
               <div className="ct5-colTitle">Solutions</div>
-              <a href="#" className="ct5-link">Quality Management Platform</a>
-              <a href="#" className="ct5-link">Low-Code Business Orchestrator</a>
-              <a href="#" className="ct5-link">Process Management Platform</a>
-              <a href="#" className="ct5-link">Robotic Process Automation</a>
-              <a href="#" className="ct5-link">Domain-Specific Generative AI</a>
-              <a href="#" className="ct5-link">Supply Chain Resilience</a>
-              <a href="#" className="ct5-link">ERP Workspace</a>
+              <a href="#service" className="ct5-link">Quality Management Platform</a>
+              <a href="#service" className="ct5-link">Low-Code Business Orchestrator</a>
+              <a href="#service" className="ct5-link">Process Management Platform</a>
+              <a href="#service" className="ct5-link">Robotic Process Automation</a>
+              <a href="#service" className="ct5-link">Domain-Specific Generative AI</a>
+              <a href="#service" className="ct5-link">Supply Chain Resilience</a>
+              <a href="#service" className="ct5-link">ERP Workspace</a>
             </div>
 
             {/* Col 3: Contact */}
