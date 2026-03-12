@@ -11,244 +11,34 @@ import SectionLeaderVision from "../components/Sectionleadervision";
 import SectionTeam from "../components/SectionTeam";
 
 /* ─────────────────────────────────────────────────────────────
-   AnimatedBg — Trunk-Branch wave canvas
-   
-   แนวคิด: เส้นหลัก (trunk) 1 เส้น วิ่งพาดผ่านหน้าจอ
-   จากนั้นแตกออกเป็นหลายๆ เส้น (branches) ที่บิดซ้อนทับกัน
-   ตรงที่เส้นซ้อนกันหนาแน่นจะสว่างขึ้นเหมือนเรืองแสง
-   
-   สีพื้นหลัง: ตาม SectionServices — dark navy + teal radial wash
+   VIDEO_ID — YouTube video ID
+   ใช้ loop=1 + playlist=VIDEO_ID เพื่อให้ YouTube loop อัตโนมัติ
+   และใช้ 2 iframe crossfade เพื่อซ่อนช่วงสีดำตอน restart
 ───────────────────────────────────────────────────────────── */
-function AnimatedBg() {
-  const canvasRef = useRef(null);
+const VIDEO_ID = "DriseDvlZH8";
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    let animId;
-    let W, H;
+const iframeStyle = {
+  position: "absolute",
+  width: "max(100vw, 177.78vh)",
+  height: "max(56.25vw, 100vh)",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  pointerEvents: "none",
+  border: "none",
+};
 
-    function resize() {
-      W = canvas.width = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-    }
-    resize();
-    window.addEventListener("resize", resize);
-
-    /* ──────────────────────────────────────────
-       TRUNK-BRANCH SYSTEM
-       
-       แต่ละ "Bundle" มี:
-       - trunk: เส้นหลัก 1 เส้น กำหนดเส้นทางหลัก
-       - branches: เส้นที่แยกออกจาก trunk
-         แต่ละ branch มี deviation (ระยะห่างจาก trunk)
-         และ phase offset ที่ต่างกัน
-         ทำให้เส้นบางส่วนไปทับกัน สร้าง glow effect
-    ────────────────────────────────────────── */
-    const bundles = [
-      {
-        /* Bundle A — ลากจากซ้ายกลาง ขึ้นขวาบน */
-        trunkY:   0.42,          /* y เริ่มต้น (fraction of H) */
-        trunkAmp: 70,            /* amplitude หลัก */
-        trunkFreq: 0.0022,
-        trunkSpeed: 0.00038,
-        trunkPhase: 0,
-
-        /* branches: deviation = ระยะห่างสูงสุดจาก trunk (px) */
-        branches: [
-          { dev: 0,    phOff: 0,     freqMul: 1.0,  aMul: 1.0,  alpha: 0.60 }, /* trunk เอง */
-          { dev: 6,    phOff: 0.08,  freqMul: 0.98, aMul: 1.05, alpha: 0.40 },
-          { dev: -6,   phOff: -0.08, freqMul: 1.02, aMul: 0.95, alpha: 0.40 },
-          { dev: 15,   phOff: 0.18,  freqMul: 0.94, aMul: 1.12, alpha: 0.26 },
-          { dev: -15,  phOff: -0.18, freqMul: 1.06, aMul: 0.88, alpha: 0.26 },
-          { dev: 28,   phOff: 0.32,  freqMul: 0.88, aMul: 1.22, alpha: 0.16 },
-          { dev: -28,  phOff: -0.32, freqMul: 1.12, aMul: 0.78, alpha: 0.16 },
-          { dev: 44,   phOff: 0.50,  freqMul: 0.82, aMul: 1.35, alpha: 0.09 },
-          { dev: -44,  phOff: -0.50, freqMul: 1.18, aMul: 0.65, alpha: 0.09 },
-          { dev: 62,   phOff: 0.72,  freqMul: 0.75, aMul: 1.5,  alpha: 0.05 },
-          { dev: -62,  phOff: -0.72, freqMul: 1.25, aMul: 0.5,  alpha: 0.05 },
-        ],
-        color: [0, 200, 185],
-        glowBlur: 14,
-      },
-      {
-        /* Bundle B — ลากจากซ้ายล่าง ผ่านกลาง ขึ้นขวา */
-        trunkY:   0.67,
-        trunkAmp: 60,
-        trunkFreq: 0.0018,
-        trunkSpeed: 0.00030,
-        trunkPhase: Math.PI * 0.9,
-
-        branches: [
-          { dev: 0,    phOff: 0,     freqMul: 1.0,  aMul: 1.0,  alpha: 0.50 },
-          { dev: 8,    phOff: 0.10,  freqMul: 0.96, aMul: 1.08, alpha: 0.34 },
-          { dev: -8,   phOff: -0.10, freqMul: 1.04, aMul: 0.92, alpha: 0.34 },
-          { dev: 20,   phOff: 0.24,  freqMul: 0.90, aMul: 1.18, alpha: 0.22 },
-          { dev: -20,  phOff: -0.24, freqMul: 1.10, aMul: 0.82, alpha: 0.22 },
-          { dev: 36,   phOff: 0.42,  freqMul: 0.84, aMul: 1.30, alpha: 0.13 },
-          { dev: -36,  phOff: -0.42, freqMul: 1.16, aMul: 0.70, alpha: 0.13 },
-          { dev: 54,   phOff: 0.64,  freqMul: 0.78, aMul: 1.45, alpha: 0.07 },
-          { dev: -54,  phOff: -0.64, freqMul: 1.22, aMul: 0.55, alpha: 0.07 },
-        ],
-        color: [0, 175, 165],
-        glowBlur: 12,
-      },
-      {
-        /* Bundle C — เส้นเล็ก กลาง-ขวา ทำหน้าที่เป็น accent */
-        trunkY:   0.54,
-        trunkAmp: 42,
-        trunkFreq: 0.0030,
-        trunkSpeed: 0.00052,
-        trunkPhase: Math.PI * 1.6,
-
-        branches: [
-          { dev: 0,    phOff: 0,     freqMul: 1.0,  aMul: 1.0,  alpha: 0.38 },
-          { dev: 5,    phOff: 0.12,  freqMul: 0.95, aMul: 1.10, alpha: 0.24 },
-          { dev: -5,   phOff: -0.12, freqMul: 1.05, aMul: 0.90, alpha: 0.24 },
-          { dev: 14,   phOff: 0.28,  freqMul: 0.88, aMul: 1.22, alpha: 0.14 },
-          { dev: -14,  phOff: -0.28, freqMul: 1.12, aMul: 0.78, alpha: 0.14 },
-          { dev: 26,   phOff: 0.48,  freqMul: 0.80, aMul: 1.38, alpha: 0.07 },
-          { dev: -26,  phOff: -0.48, freqMul: 1.20, aMul: 0.62, alpha: 0.07 },
-        ],
-        color: [30, 218, 200],
-        glowBlur: 9,
-      },
-    ];
-
-    /* ── คำนวณ Y ของ branch ณ ตำแหน่ง x ── */
-    function branchY(b, bDef, x) {
-      return (
-        b.trunkY * H +
-        Math.sin(x * b.trunkFreq * bDef.freqMul + b.trunkPhase + bDef.phOff) *
-          (b.trunkAmp * bDef.aMul) +
-        /* harmonic เพิ่มความซับซ้อน */
-        Math.sin(x * b.trunkFreq * bDef.freqMul * 2.1 + b.trunkPhase * 1.4 + bDef.phOff * 0.6) *
-          (b.trunkAmp * bDef.aMul * 0.28) +
-        bDef.dev
-      );
-    }
-
-    function draw() {
-      /* ── Background: เข้มคล้าย SectionServices ── */
-      ctx.fillStyle = "#060f1a";
-      ctx.fillRect(0, 0, W, H);
-
-      /* teal wash ซ้ายล่าง (คล้าย strength-dark) */
-      const wash1 = ctx.createRadialGradient(W * 0.18, H * 0.72, 0, W * 0.18, H * 0.72, W * 0.5);
-      wash1.addColorStop(0,   "rgba(0,80,80,0.22)");
-      wash1.addColorStop(0.5, "rgba(0,50,60,0.10)");
-      wash1.addColorStop(1,   "rgba(0,0,0,0)");
-      ctx.fillStyle = wash1;
-      ctx.fillRect(0, 0, W, H);
-
-      /* teal glow บนขวา — characteristic ของ original */
-      const glowTR = ctx.createRadialGradient(W * 0.90, H * 0.08, 0, W * 0.90, H * 0.08, W * 0.40);
-      glowTR.addColorStop(0,    "rgba(0,210,192,0.22)");
-      glowTR.addColorStop(0.28, "rgba(0,172,158,0.09)");
-      glowTR.addColorStop(0.55, "rgba(0,115,108,0.04)");
-      glowTR.addColorStop(1,    "rgba(0,0,0,0)");
-      ctx.fillStyle = glowTR;
-      ctx.fillRect(0, 0, W, H);
-
-      /* subtle blue wash กลาง-ขวา */
-      const wash2 = ctx.createRadialGradient(W * 0.72, H * 0.5, 0, W * 0.72, H * 0.5, W * 0.38);
-      wash2.addColorStop(0,   "rgba(0,50,80,0.14)");
-      wash2.addColorStop(1,   "rgba(0,0,0,0)");
-      ctx.fillStyle = wash2;
-      ctx.fillRect(0, 0, W, H);
-
-      /* ── วาด Bundles ── */
-      bundles.forEach((b) => {
-        /* เลื่อน phase */
-        b.trunkPhase += b.trunkSpeed;
-
-        const [r, g, bl] = b.color;
-
-        /* วาดทุก branch จาก outer ไป trunk (trunk ทับสุด) */
-        for (let bi = b.branches.length - 1; bi >= 0; bi--) {
-          const bDef = b.branches[bi];
-
-          ctx.beginPath();
-          const step = 3;
-          for (let x = 0; x <= W; x += step) {
-            const y = branchY(b, bDef, x);
-            x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-          }
-
-          ctx.strokeStyle = `rgba(${r},${g},${bl},${bDef.alpha})`;
-          ctx.lineWidth = bDef.dev === 0 ? 1.0 : 0.7;
-          ctx.stroke();
-        }
-
-        /* ── Glow pass: trunk + ใกล้ trunk วาดซ้ำด้วย shadow ──
-           จำลอง "เส้นซ้อนกันสว่าง" ตรงที่ branches ชิดกัน */
-        ctx.save();
-        ctx.shadowColor = `rgba(${r},${g},${bl},0.55)`;
-        ctx.shadowBlur  = b.glowBlur;
-
-        /* trunk glow */
-        ctx.beginPath();
-        for (let x = 0; x <= W; x += 3) {
-          const y = branchY(b, b.branches[0], x);
-          x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-        }
-        ctx.strokeStyle = `rgba(${r},${g},${bl},0.75)`;
-        ctx.lineWidth = 1.2;
-        ctx.stroke();
-
-        /* double-pass สว่างขึ้น */
-        ctx.shadowBlur = b.glowBlur * 2.2;
-        ctx.strokeStyle = `rgba(${r},${g},${bl},0.35)`;
-        ctx.lineWidth = 2.2;
-        ctx.stroke();
-
-        ctx.restore();
-
-        /* ── Intersection glow: จุดที่ branch ชิดกันมาก ──
-           สแกนหาจุด x ที่เส้นที่ 1 กับ -1 ใกล้กัน → วาด radial glow */
-        if (b.branches.length >= 3) {
-          const bPos = b.branches[1];
-          const bNeg = b.branches[2];
-          for (let x = 0; x < W; x += 60) {
-            const yPos = branchY(b, bPos, x);
-            const yNeg = branchY(b, bNeg, x);
-            const dist = Math.abs(yPos - yNeg);
-            if (dist < 18) {
-              /* เส้นชิดกัน — วาด glow */
-              const yCtr = (yPos + yNeg) / 2;
-              const intensity = (1 - dist / 18) * 0.25;
-              const ig = ctx.createRadialGradient(x, yCtr, 0, x, yCtr, 22 + (18 - dist));
-              ig.addColorStop(0,   `rgba(${r},${g},${bl},${intensity})`);
-              ig.addColorStop(1,   "rgba(0,0,0,0)");
-              ctx.fillStyle = ig;
-              ctx.fillRect(x - 40, yCtr - 40, 80, 80);
-            }
-          }
-        }
-      });
-
-      animId = requestAnimationFrame(draw);
-    }
-
-    draw();
-
-    return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener("resize", resize);
-    };
-  }, []);
-
+/* Single iframe — ใช้ loop=1&playlist= ให้ YouTube จัดการเอง
+   ไม่มี black flash เพราะ YouTube จะ preload ตัวเองก่อน restart */
+function YoutubeBg() {
+  const src = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&controls=0&loop=1&playlist=${VIDEO_ID}&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&fs=0&disablekb=1`;
   return (
-    <canvas
-      ref={canvasRef}
-      style={{
-        position: "absolute",
-        inset: 0,
-        width: "100%",
-        height: "100%",
-        display: "block",
-      }}
+    <iframe
+      src={src}
+      title="bg-video"
+      allow="autoplay; encrypted-media"
+      allowFullScreen
+      style={iframeStyle}
     />
   );
 }
@@ -282,15 +72,15 @@ const slides = [
 ];
 
 export default function Home() {
-  const [isLoaded, setIsLoaded]               = useState(false);
-  const [isFading, setIsFading]               = useState(false);
-  const [introPhase, setIntroPhase]           = useState("center");
-  const [currentSlide, setCurrentSlide]       = useState(0);
-  const [isAnimating, setIsAnimating]         = useState(false);
-  const [slideDir, setSlideDir]               = useState("up");
+  const [isLoaded, setIsLoaded]         = useState(false);
+  const [isFading, setIsFading]         = useState(false);
+  const [introPhase, setIntroPhase]     = useState("center");
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAnimating, setIsAnimating]   = useState(false);
+  const [slideDir, setSlideDir]         = useState("up");
   const [carouselHovered, setCarouselHovered] = useState(false);
-  const [navVisible, setNavVisible]           = useState(false);
-  const autoRef     = useRef(null);
+  const [navVisible, setNavVisible]     = useState(false);
+  const autoRef    = useRef(null);
   const lastScrollY = useRef(0);
 
   useEffect(() => {
@@ -349,7 +139,7 @@ export default function Home() {
 
       {/* PRELOADER */}
       {!isLoaded && (
-        <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#060f1a]"
+        <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#050d1a]"
           style={{ opacity: isFading ? 0 : 1, transition: "opacity 0.6s ease", pointerEvents: isFading ? "none" : "auto" }}>
           <img src={logo} alt="Aileen Solutions" className="mb-6 h-12 w-auto opacity-90"
             style={{ animation: "pulse 2s ease-in-out infinite" }} />
@@ -373,17 +163,18 @@ export default function Home() {
       </div>
 
       {/* HERO */}
-      <section className="relative w-full min-h-screen overflow-hidden bg-[#060f1a]">
+      <section className="relative w-full min-h-screen overflow-hidden bg-black">
 
-        {/* ── Canvas animated background ── */}
+        {/* ── YouTube bg with native loop ── */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <AnimatedBg />
+          <YoutubeBg />
         </div>
 
-        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-black/25 via-transparent to-black/20" />
+        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-black/30 via-black/20 to-black/25" />
 
         <div className="relative z-10 flex min-h-screen flex-col items-center px-6 pb-10"
           style={{ opacity: isLoaded ? 1 : 0, transition: "opacity 0.8s ease 0.1s" }}>
+          <div className="absolute inset-0 z-[1] bg-black/5" />
 
           <div className="relative z-10 flex min-h-screen flex-col items-center px-6 pt-20 pb-10"
             style={{ opacity: isLoaded ? 1 : 0, transition: "opacity 0.8s ease 0.1s" }}>
@@ -489,4 +280,4 @@ export default function Home() {
       <section id="contact" className=""><SectionContactFooter /></section>
     </div>
   );
-}
+} 
